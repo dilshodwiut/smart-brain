@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css";
+import classes from "./App.module.css";
 import ParticlesBg from "particles-bg";
 import Clarifai from "clarifai";
 import Navigation from "./components/Navigation/Navigation";
@@ -68,12 +68,12 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={classes.App}>
       <ParticlesBg
         color="#ffffff"
         type="cobweb"
         bg={true}
-        className="particles"
+        className={classes.Particles}
       />
       <Navigation onRouteChange={onRouteChange} isSignedIn={isSignedIn} />
       <Logo />

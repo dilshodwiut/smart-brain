@@ -1,18 +1,17 @@
 import React from "react";
+import classes from "./FaceRecognition.module.css";
 
 function FaceRecognition({ imageUrl, box }) {
   return (
-    <div
-      className="center shadow-5"
-      style={{ width: "500px", margin: "16px auto", position: "relative" }}
-    >
+    <div className={"center shadow-5 ".concat(classes.FaceRecognition)}>
       <img
+        className={classes.Image}
         id="inputImage"
         src={imageUrl}
         alt="Error"
-        stlye={{ width: "100%", height: "auto" }}
       />
       <div
+        className={classes.Box}
         style={{
           position: "absolute",
           boxShadow: "0 0 0 3px #149df2 inset",

@@ -2,12 +2,7 @@
   text-align: center;
 }
 
-.center {
-  display: flex;
-  justify-content: center;
-}
-
-.particles {
+.Particles {
   position: fixed;
   top: 0;
   right: 0;

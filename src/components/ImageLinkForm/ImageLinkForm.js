@@ -3,7 +3,7 @@ import classes from "./ImageLinkForm.module.css";
 
 function ImageLinkForm({ onInputChange, onSubmit, userInput }) {
   return (
-    <div>
+    <>
       <p className="f3">
         {"This Magic Brain will detect faces in your pictures. Give it a try."}
       </p>
@@ -18,14 +18,13 @@ function ImageLinkForm({ onInputChange, onSubmit, userInput }) {
           />
           <button
             className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple"
-            style={{ outline: "none", border: "none" }}
             onClick={onSubmit}
           >
             Detect
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

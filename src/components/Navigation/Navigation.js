@@ -1,9 +1,10 @@
 import React from "react";
+import classes from "./Navigation.module.css";
 
 function Navigation({ onRouteChange, isSignedIn }) {
   if (isSignedIn) {
     return (
-      <nav style={{ display: "flex", justifyContent: "flex-end" }}>
+      <nav className={classes.Navbar}>
         <p
           className="f3 link dim black underline pa3 pointer"
           onClick={function () {
@@ -16,7 +17,7 @@ function Navigation({ onRouteChange, isSignedIn }) {
     );
   } else {
     return (
-      <nav style={{ display: "flex", justifyContent: "flex-end" }}>
+      <nav className={classes.Navbar}>
         <p
           className="f3 link dim black underline pa3 pointer"
           onClick={function () {
