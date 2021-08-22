@@ -10,7 +10,7 @@ function ImageLinkForm({ onInputChange, onSubmit, userInput }) {
       <div className="center">
         <div className={"pa4 br3 shadow-5 center ".concat(classes.Form)}>
           <input
-            className="f4 pa2 w-70 center input-reset ba"
+            className="f4 pa2 w-70 center input-reset"
             type="text"
             placeholder="URL of an image..."
             value={userInput}

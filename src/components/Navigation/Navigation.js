@@ -1,39 +1,32 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import classes from "./Navigation.module.css";
 
-function Navigation({ onRouteChange, isSignedIn }) {
+function Navigation({ isSignedIn, redirectSignin }) {
   if (isSignedIn) {
     return (
       <nav className={classes.Navbar}>
-        <p
+        <Link
+          to="/signin"
           className="f3 link dim black underline pa3 pointer"
-          onClick={function () {
-            onRouteChange("signin");
-          }}
+          onClick={redirectSignin}
         >
           Sign Out
-        </p>
+        </Link>
       </nav>
     );
   } else {
     return (
       <nav className={classes.Navbar}>
-        <p
+        <Link to="/signin" className="f3 link dim black underline pa3 pointer">
+          Sign in
+        </Link>
+        <Link
+          to="/register"
           className="f3 link dim black underline pa3 pointer"
-          onClick={function () {
-            onRouteChange("signin");
-          }}
-        >
-          Sign In
-        </p>
-        <p
-          className="f3 link dim black underline pa3 pointer"
-          onClick={function () {
-            onRouteChange("register");
-          }}
         >
           Register
-        </p>
+        </Link>
       </nav>
     );
   }

@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-function Register({ onRouteChange }) {
+function Register({ redirectHome }) {
   return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
       <main className="pa4 black-80">
@@ -42,14 +43,15 @@ function Register({ onRouteChange }) {
             </div>
           </fieldset>
           <div className="">
-            <input
-              className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-              type="submit"
-              value="Register"
-              onClick={function () {
-                onRouteChange("home");
-              }}
-            />
+            <Link to="/">
+              <input
+                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                type="submit"
+                value="Register"
+                // onClick={props.history.push('/')}
+                onClick={redirectHome}
+              />
+            </Link>
           </div>
         </form>
       </main>

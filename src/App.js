@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import classes from "./App.module.css";
 import ParticlesBg from "particles-bg";
 import Clarifai from "clarifai";
@@ -14,12 +15,11 @@ const app = new Clarifai.App({
   apiKey: "da83cb85013349cd9208ff3964b606f5",
 });
 
-function App() {
+export default function App() {
   const [userInput, setUserInput] = useState("");
   const [submitState, setSubmitState] = useState(false);
   const [box, setBox] = useState({});
-  const [route, setRoute] = useState("signin");
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(true);
 
   function onInputChange(e) {
     setUserInput(e.target.value);
@@ -56,44 +56,47 @@ function App() {
     setBox(box);
   }
 
-  function onRouteChange(route) {
-    if (route === "signout") {
-      setIsSignedIn(false);
-    } else if (route === "home") {
-      setIsSignedIn(true);
-    } else if (route === "signin") {
-      setIsSignedIn(false);
-    }
-    setRoute(route);
+  function redirectHome() {
+    setIsSignedIn(true);
+  }
+
+  function redirectSignin() {
+    setIsSignedIn(false);
   }
 
   return (
-    <div className={classes.App}>
-      <ParticlesBg
-        color="#ffffff"
-        type="cobweb"
-        bg={true}
-        className={classes.Particles}
-      />
-      <Navigation onRouteChange={onRouteChange} isSignedIn={isSignedIn} />
-      <Logo />
-      {route === "home" ? (
-        <React.Fragment>
-          <Rank />
-          <ImageLinkForm
-            onInputChange={onInputChange}
-            onSubmit={onSubmit}
-            userInput={userInput}
-          />
-        </React.Fragment>
-      ) : route === "signin" ? (
-        <Signin onRouteChange={onRouteChange} />
-      ) : (
-        <Register onRouteChange={onRouteChange} />
-      )}
-      {submitState && <FaceRecognition imageUrl={userInput} box={box} />}
-    </div>
+    <Router>
+      <div className={classes.App}>
+        <ParticlesBg
+          color="#ffffff"
+          type="cobweb"
+          bg={true}
+          className={classes.Particles}
+        />
+        <Navigation isSignedIn={isSignedIn} redirectSignin={redirectSignin} />
+        <Logo />
+        <Switch>
+          <Route path="/signin">
+            <Signin redirectHome={redirectHome} />
+          </Route>
+          <Route path="/register">
+            <Register redirectHome={redirectHome} />
+          </Route>
+          <Route path="/">
+            <React.Fragment>
+              <Rank />
+              <ImageLinkForm
+                onInputChange={onInputChange}
+                onSubmit={onSubmit}
+                userInput={userInput}
+              />
+              {submitState && (
+                <FaceRecognition imageUrl={userInput} box={box} />
+              )}
+            </React.Fragment>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
-
-export default App;
