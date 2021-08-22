@@ -28,6 +28,10 @@ button {
   border: none;
 }
 
+input[type="text"] {
+  outline: none;
+}
+
 img {
   vertical-align: bottom;
 }
