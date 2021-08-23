@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./ImageLinkForm.module.css";
 
 function ImageLinkForm({ userInput, onInputChange, onSubmit }) {
+  console.log("[ImageLinkForm] rendered");
   return (
     <>
       <p className="f3 tc">
@@ -10,7 +11,7 @@ function ImageLinkForm({ userInput, onInputChange, onSubmit }) {
       <div className="center">
         <div className={"pa4 br3 shadow-5 center ".concat(classes.Form)}>
           <input
-            className="f4 pa2 w-70 center input-reset"
+            className={"f4 pa2 w-70 center input-reset ".concat(classes.Input)}
             type="text"
             placeholder="URL of an image..."
             value={userInput}
@@ -28,4 +29,4 @@ function ImageLinkForm({ userInput, onInputChange, onSubmit }) {
   );
 }
 
-export default ImageLinkForm;
+export default React.memo(ImageLinkForm);

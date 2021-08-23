@@ -1,7 +1,7 @@
 .Tilt {
   background: linear-gradient(89deg, #ff5edf 0%, #04c8de 100%);
-  height: 150px;
-  width: 150px;
+  height: 125px;
+  width: 125px;
   transform-style: preserve-3d;
   transform: perspective(1000px);
 }

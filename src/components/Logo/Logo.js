@@ -1,7 +1,8 @@
 import React from "react";
 import classes from "./Logo.module.css";
 
-function Logo(props) {
+const Logo = React.memo(() => {
+  console.log("[Logo] rendered");
   return (
     <div className={"ma4 mt0 pa3 br2 shadow-2 Tilt ".concat(classes.Tilt)}>
       <img
@@ -11,6 +12,6 @@ function Logo(props) {
       />
     </div>
   );
-}
+});
 
 export default Logo;

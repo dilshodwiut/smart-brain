@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Layout from "./hoc/Layout/Layout";
 import Signin from "./components/Signin/Signin";
@@ -8,15 +8,16 @@ import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
 
 export default function App() {
+  console.log("[App] rendered");
   const [isSignedIn, setIsSignedIn] = useState(true);
 
-  function redirectHome() {
+  const redirectHome = useCallback(() => {
     setIsSignedIn(true);
-  }
+  }, []);
 
-  function redirectSignin() {
+  const redirectSignin = useCallback(() => {
     setIsSignedIn(false);
-  }
+  }, []);
 
   return (
     <Layout>

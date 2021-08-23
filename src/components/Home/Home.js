@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Rank from "./Rank/Rank";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./FaceRecognition/FaceRecognition";
@@ -9,27 +9,15 @@ const app = new Clarifai.App({
 });
 
 function Home(props) {
+  console.log("[Home] rendered");
   const [userInput, setUserInput] = useState("");
-  const [submitState, setSubmitState] = useState(false);
   const [box, setBox] = useState({});
 
-  function onInputChange(e) {
+  const onInputChange = useCallback((e) => {
     setUserInput(e.target.value);
-    setSubmitState(false);
-  }
-  function onSubmit() {
-    app.models
-      .predict(Clarifai.FACE_DETECT_MODEL, userInput)
-      .then(function (res) {
-        displayFaceBox(calculateFaceLocation(res));
-      })
-      .catch(function (err) {
-        throw new Error("Error in getting api response", err);
-      });
-    setSubmitState(true);
-  }
+  }, []);
 
-  function calculateFaceLocation(data) {
+  const calculateFaceLocation = useCallback(function (data) {
     const clarifaiFace =
       data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById("inputImage");
@@ -41,11 +29,35 @@ function Home(props) {
       rightCol: width - clarifaiFace.right_col * width,
       bottomRow: height - clarifaiFace.bottom_row * height,
     };
-  }
+  }, []);
 
-  function displayFaceBox(box) {
+  const displayFaceBox = useCallback(function (box) {
     setBox(box);
-  }
+  }, []);
+
+  const onSubmit = useCallback(
+    function () {
+      app.models
+        .predict(Clarifai.FACE_DETECT_MODEL, userInput)
+        .then(function (res) {
+          displayFaceBox(calculateFaceLocation(res));
+        })
+        .catch(function (err) {
+          throw new Error("Error in getting api response", err);
+        });
+    },
+    [userInput, displayFaceBox, calculateFaceLocation]
+  );
+
+  const isImgLink = useCallback((url) => {
+    if (typeof url !== "string") {
+      return false;
+    }
+    return (
+      url.match(/^http[^?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null
+    );
+  }, []);
+
   return (
     <>
       <Rank />
@@ -54,7 +66,9 @@ function Home(props) {
         onSubmit={onSubmit}
         userInput={userInput}
       />
-      {submitState && <FaceRecognition imageUrl={userInput} box={box} />}
+      {isImgLink(userInput) && (
+        <FaceRecognition imageUrl={userInput} box={box} />
+      )}
     </>
   );
 }

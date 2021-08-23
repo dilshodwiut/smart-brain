@@ -2,7 +2,8 @@ import React from "react";
 import classes from "./Layout.module.css";
 import ParticlesBg from "particles-bg";
 
-export default function Layout(props) {
+function Layout(props) {
+  console.log("[Layout] rendered");
   return (
     <>
       <ParticlesBg
@@ -15,3 +16,5 @@ export default function Layout(props) {
     </>
   );
 }
+
+export default Layout;
