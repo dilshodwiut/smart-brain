@@ -1,10 +1,10 @@
 import React from "react";
 import classes from "./ImageLinkForm.module.css";
 
-function ImageLinkForm({ onInputChange, onSubmit, userInput }) {
+function ImageLinkForm({ userInput, onInputChange, onSubmit }) {
   return (
     <>
-      <p className="f3">
+      <p className="f3 tc">
         {"This Magic Brain will detect faces in your pictures. Give it a try."}
       </p>
       <div className="center">
