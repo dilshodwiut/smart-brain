@@ -49,15 +49,6 @@ function Home(props) {
     [userInput, displayFaceBox, calculateFaceLocation]
   );
 
-  const isImgLink = useCallback((url) => {
-    if (typeof url !== "string") {
-      return false;
-    }
-    return (
-      url.match(/^http[^?]*.(jpg|jpeg|gif|png|tiff|bmp)(\?(.*))?$/gim) !== null
-    );
-  }, []);
-
   return (
     <>
       <Rank />
@@ -66,7 +57,7 @@ function Home(props) {
         onSubmit={onSubmit}
         userInput={userInput}
       />
-      {isImgLink(userInput) && (
+      {userInput && (
         <FaceRecognition imageUrl={userInput} box={box} />
       )}
     </>
