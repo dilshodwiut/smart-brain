@@ -8,7 +8,7 @@ function Auth(props) {
   };
 
   return (
-    <div className="tc-l mt2 mt3-m mt4-l ph3">
+    <div className="tc-l mt4 mt5-m mt6-l ph3">
       <h1 className="f2 f1-l fw2 white-90 mb0 lh-title">
         This Magic Brain will detect faces in your pictures
       </h1>
