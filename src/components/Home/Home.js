@@ -1,71 +1,73 @@
 import React, { useState, useCallback, useContext } from "react";
 import { AuthContext } from "../../context/auth-context";
+import Clarifai from "clarifai";
 import Auth from "../Auth";
 import Rank from "./Rank/Rank";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./FaceRecognition/FaceRecognition";
-import Clarifai from "clarifai";
 
 const app = new Clarifai.App({
   apiKey: "da83cb85013349cd9208ff3964b606f5",
 });
 
-function Home(props) {
+function Home() {
   console.log("[Home] rendered");
-
-  const authContext = useContext(AuthContext);
-
-  let content = <Auth />;
-
   const [userInput, setUserInput] = useState("");
-  const [box, setBox] = useState({});
+  const [insetBoxes, setInsetBoxes] = useState([]);
 
-  const onInputChange = useCallback((e) => {
+  const inputChangeHandler = useCallback((e) => {
     setUserInput(e.target.value);
+    setInsetBoxes([]);
   }, []);
 
-  const calculateFaceLocation = useCallback(function (data) {
-    const clarifaiFace =
-      data.outputs[0].data.regions[0].region_info.bounding_box;
+  const calculateFaceLocation = useCallback(function (regions) {
+    const boundingBoxes = regions.map((region) => {
+      return region.region_info.bounding_box;
+    });
     const image = document.getElementById("inputImage");
     const width = ++image.width;
     const height = ++image.height;
-    return {
-      leftCol: clarifaiFace.left_col * width,
-      topRow: clarifaiFace.top_row * height,
-      rightCol: width - clarifaiFace.right_col * width,
-      bottomRow: height - clarifaiFace.bottom_row * height,
-    };
+    const insetBoxes = boundingBoxes.map((boundingBox) => {
+      return {
+        leftCol: boundingBox.left_col * width,
+        topRow: boundingBox.top_row * height,
+        rightCol: width - boundingBox.right_col * width,
+        bottomRow: height - boundingBox.bottom_row * height,
+      };
+    });
+    return insetBoxes;
   }, []);
 
-  const displayFaceBox = useCallback(function (box) {
-    setBox(box);
-  }, []);
-
-  const onSubmit = useCallback(
+  const submitHandler = useCallback(
     function () {
       app.models
         .predict(Clarifai.FACE_DETECT_MODEL, userInput)
         .then(function (res) {
-          displayFaceBox(calculateFaceLocation(res));
+          setInsetBoxes(calculateFaceLocation(res.outputs[0].data.regions));
         })
         .catch(function (err) {
           throw new Error("Error in getting api response", err);
         });
     },
-    [userInput, displayFaceBox, calculateFaceLocation]
+    [userInput, calculateFaceLocation]
   );
+
+  const authContext = useContext(AuthContext);
+
+  let content = <Auth />;
 
   if (authContext.isAuth) {
     content = (
       <>
         <Rank />
         <ImageLinkForm
-          onInputChange={onInputChange}
-          onSubmit={onSubmit}
           userInput={userInput}
+          onInputChange={inputChangeHandler}
+          onSubmit={submitHandler}
         />
-        {userInput && <FaceRecognition imageUrl={userInput} box={box} />}
+        {userInput && (
+          <FaceRecognition imageUrl={userInput} boxes={insetBoxes} />
+        )}
       </>
     );
   }

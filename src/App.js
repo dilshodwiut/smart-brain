@@ -1,21 +1,24 @@
 import React, { useContext, useCallback } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
-import Signin from "./components/Signin/Signin";
-import Register from "./components/Register/Register";
 import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
+import Signin from "./components/Signin/Signin";
+import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
+import Auth from "./components/Auth";
 
 export default function App() {
   console.log("[App] rendered");
 
   const authContext = useContext(AuthContext);
+  let history = useHistory();
 
   const redirectHome = useCallback(() => {
     authContext.login();
-  }, [authContext]);
+    history.push("/home");
+  }, [authContext, history]);
 
   const redirectSignin = useCallback(() => {
     authContext.logout();
@@ -35,7 +38,10 @@ export default function App() {
         <Route path="/register">
           <Register redirectHome={redirectHome} />
         </Route>
-        <Route path="/" exact component={Home} />
+        <Route path="/home" component={Home} />
+        <Route path="/" exact>
+          {authContext.isAuth ? <Redirect to="/home" /> : <Auth />}
+        </Route>
       </Switch>
     </Layout>
   );

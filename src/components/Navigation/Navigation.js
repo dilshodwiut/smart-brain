@@ -4,9 +4,17 @@ import classes from "./Navigation.module.css";
 
 function Navigation({ isSignedIn, redirectSignin }) {
   console.log("[Navigation] rendered");
+
+  const Ranking = (
+    <Link to="/rank" className="f3 link dim black underline pa3 pointer">
+      Ranking
+    </Link>
+  );
+
   if (isSignedIn) {
     return (
       <nav className={classes.Navbar}>
+        {Ranking}
         <Link
           to="/signin"
           className="f3 link dim black underline pa3 pointer"
@@ -19,6 +27,7 @@ function Navigation({ isSignedIn, redirectSignin }) {
   } else {
     return (
       <nav className={classes.Navbar}>
+        {Ranking}
         <Link to="/signin" className="f3 link dim black underline pa3 pointer">
           Sign in
         </Link>

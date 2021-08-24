@@ -1,18 +1,16 @@
 import React from "react";
 import classes from "./FaceRecognition.module.css";
 
-function FaceRecognition({ imageUrl, box }) {
+function FaceRecognition({ imageUrl, boxes }) {
   console.log("[FaceRecognition] rendered");
-  return (
-    <div className={"center shadow-5 ".concat(classes.FaceRecognition)}>
-      <img
-        className={classes.Image}
-        id="inputImage"
-        src={imageUrl}
-        alt="Error"
-      />
-      {Object.entries(box).length ? (
+
+  let insetBoxes = [];
+
+  if (boxes.length) {
+    insetBoxes = boxes.map((box, index) => {
+      return (
         <div
+          key={index}
           className={classes.Box}
           style={{
             position: "absolute",
@@ -27,7 +25,19 @@ function FaceRecognition({ imageUrl, box }) {
             left: box.leftCol,
           }}
         ></div>
-      ) : null}
+      );
+    });
+  }
+
+  return (
+    <div className={"center shadow-5 ".concat(classes.FaceRecognition)}>
+      <img
+        className={classes.Image}
+        id="inputImage"
+        src={imageUrl}
+        alt="Error"
+      />
+      {insetBoxes === [] ? null : insetBoxes}
     </div>
   );
 }

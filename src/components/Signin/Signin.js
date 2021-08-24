@@ -33,15 +33,12 @@ function Signin({ redirectHome }) {
             </div>
           </fieldset>
           <div className="tc">
-            <Link to="/">
-              <input
-                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-                type="submit"
-                value="Sign in"
-                // onClick={props.history.push("/")}
-                onClick={redirectHome}
-              />
-            </Link>
+            <input
+              className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+              type="submit"
+              value="Sign in"
+              onClick={redirectHome}
+            />
           </div>
           <div className="lh-copy mt3 tc">
             <Link to="/register" className="f6 link dim black db pointer">

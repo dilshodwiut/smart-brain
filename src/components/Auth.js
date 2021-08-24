@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../context/auth-context";
 
-function Auth(props) {
+function Auth() {
+  console.log("[Auth] rendered");
   const authContext = useContext(AuthContext);
   const loginHandler = () => {
     authContext.login();

@@ -3,6 +3,7 @@ import classes from "./ImageLinkForm.module.css";
 
 function ImageLinkForm({ userInput, onInputChange, onSubmit }) {
   console.log("[ImageLinkForm] rendered");
+
   return (
     <>
       <p className="f3 tc">
