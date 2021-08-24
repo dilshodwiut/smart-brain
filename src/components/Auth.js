@@ -14,7 +14,7 @@ function Auth() {
         This Magic Brain will detect faces in your pictures
       </h1>
       <h2 className="fw1 f3 white-80 mt3 mb4">
-        Image urls that include only one person supported for now
+        Multiple face detections in a single image is supported!
       </h2>
       <button
         className="f6 no-underline grow dib v-mid bg-blue white ba b--blue ph3 pv2 mb3"
