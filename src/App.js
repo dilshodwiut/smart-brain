@@ -1,39 +1,42 @@
-import React, { useState, useCallback } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React, { useContext, useCallback } from "react";
+import { Switch, Route } from "react-router-dom";
+import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
-import Home from "./components/Home/Home";
 import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
+import Home from "./components/Home/Home";
 
 export default function App() {
   console.log("[App] rendered");
-  const [isSignedIn, setIsSignedIn] = useState(true);
+
+  const authContext = useContext(AuthContext);
 
   const redirectHome = useCallback(() => {
-    setIsSignedIn(true);
-  }, []);
+    authContext.login();
+  }, [authContext]);
 
   const redirectSignin = useCallback(() => {
-    setIsSignedIn(false);
-  }, []);
+    authContext.logout();
+  }, [authContext]);
 
   return (
     <Layout>
-      <Router>
-        <Navigation isSignedIn={isSignedIn} redirectSignin={redirectSignin} />
-        <Logo />
-        <Switch>
-          <Route path="/signin">
-            <Signin redirectHome={redirectHome} />
-          </Route>
-          <Route path="/register">
-            <Register redirectHome={redirectHome} />
-          </Route>
-          <Route path="/" exact component={Home} />
-        </Switch>
-      </Router>
+      <Navigation
+        isSignedIn={authContext.isAuth}
+        redirectSignin={redirectSignin}
+      />
+      <Logo />
+      <Switch>
+        <Route path="/signin">
+          <Signin redirectHome={redirectHome} />
+        </Route>
+        <Route path="/register">
+          <Register redirectHome={redirectHome} />
+        </Route>
+        <Route path="/" exact component={Home} />
+      </Switch>
     </Layout>
   );
 }

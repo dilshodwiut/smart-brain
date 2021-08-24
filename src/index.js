@@ -5,10 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "tachyons";
 import VanillaTilt from "vanilla-tilt";
+import AuthContextProvider from "./context/auth-context";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,4 +1,6 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
+import { AuthContext } from "../../context/auth-context";
+import Auth from "../Auth";
 import Rank from "./Rank/Rank";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./FaceRecognition/FaceRecognition";
@@ -10,6 +12,11 @@ const app = new Clarifai.App({
 
 function Home(props) {
   console.log("[Home] rendered");
+
+  const authContext = useContext(AuthContext);
+
+  let content = <Auth />;
+
   const [userInput, setUserInput] = useState("");
   const [box, setBox] = useState({});
 
@@ -49,19 +56,21 @@ function Home(props) {
     [userInput, displayFaceBox, calculateFaceLocation]
   );
 
-  return (
-    <>
-      <Rank />
-      <ImageLinkForm
-        onInputChange={onInputChange}
-        onSubmit={onSubmit}
-        userInput={userInput}
-      />
-      {userInput && (
-        <FaceRecognition imageUrl={userInput} box={box} />
-      )}
-    </>
-  );
+  if (authContext.isAuth) {
+    content = (
+      <>
+        <Rank />
+        <ImageLinkForm
+          onInputChange={onInputChange}
+          onSubmit={onSubmit}
+          userInput={userInput}
+        />
+        {userInput && <FaceRecognition imageUrl={userInput} box={box} />}
+      </>
+    );
+  }
+
+  return content;
 }
 
 export default Home;
