@@ -15,28 +15,30 @@ export default function App() {
   const authContext = useContext(AuthContext);
   let history = useHistory();
 
-  const redirectHome = useCallback(() => {
+  const signinHandler = useCallback(() => {
     authContext.login();
     history.push("/home");
   }, [authContext, history]);
 
-  const redirectSignin = useCallback(() => {
+  const registerHandler = useCallback(() => {
+    authContext.login();
+    history.push("/home");
+  }, [authContext, history]);
+
+  const signoutHandler = useCallback(() => {
     authContext.logout();
   }, [authContext]);
 
   return (
     <Layout>
-      <Navigation
-        isSignedIn={authContext.isAuth}
-        redirectSignin={redirectSignin}
-      />
+      <Navigation isSignedIn={authContext.isAuth} onSignout={signoutHandler} />
       <Logo />
       <Switch>
         <Route path="/signin">
-          <Signin redirectHome={redirectHome} />
+          <Signin onSignin={signinHandler} />
         </Route>
         <Route path="/register">
-          <Register redirectHome={redirectHome} />
+          <Register onRegister={registerHandler} />
         </Route>
         <Route path="/home" component={Home} />
         <Route path="/" exact>

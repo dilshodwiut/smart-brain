@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import classes from "./Navigation.module.css";
 
-function Navigation({ isSignedIn, redirectSignin }) {
+function Navigation({ isSignedIn, onSignout }) {
   console.log("[Navigation] rendered");
 
   const Ranking = (
@@ -18,7 +18,7 @@ function Navigation({ isSignedIn, redirectSignin }) {
         <Link
           to="/signin"
           className="f3 link dim black underline pa3 pointer"
-          onClick={redirectSignin}
+          onClick={onSignout}
         >
           Sign Out
         </Link>

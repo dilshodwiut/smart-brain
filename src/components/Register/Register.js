@@ -1,6 +1,6 @@
 import React from "react";
 
-function Register({ redirectHome }) {
+function Register({ onRegister }) {
   console.log("[Register] rendered");
 
   return (
@@ -48,7 +48,7 @@ function Register({ redirectHome }) {
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Register"
-              onClick={redirectHome}
+              onClick={onRegister}
             />
           </div>
         </form>

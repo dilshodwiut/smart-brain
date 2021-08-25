@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Signin({ redirectHome }) {
+function Signin({ onSignin }) {
   console.log("[Signin] rendered");
   return (
     <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -37,7 +37,7 @@ function Signin({ redirectHome }) {
               className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
               type="submit"
               value="Sign in"
-              onClick={redirectHome}
+              onClick={onSignin}
             />
           </div>
           <div className="lh-copy mt3 tc">
