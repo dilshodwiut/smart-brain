@@ -6,7 +6,7 @@ function Navigation({ isSignedIn, onSignout }) {
   console.log("[Navigation] rendered");
 
   const Ranking = (
-    <Link to="/rank" className="f3 link dim black underline pa3 pointer">
+    <Link to="/rank" className="f3 link dim black underline pa2 pa3-l pointer">
       Ranking
     </Link>
   );
@@ -17,7 +17,7 @@ function Navigation({ isSignedIn, onSignout }) {
         {Ranking}
         <Link
           to="/signin"
-          className="f3 link dim black underline pa3 pointer"
+          className="f3 link dim black underline pa2 pa3-l pointer"
           onClick={onSignout}
         >
           Sign Out
@@ -28,12 +28,15 @@ function Navigation({ isSignedIn, onSignout }) {
     return (
       <nav className={classes.Navbar}>
         {Ranking}
-        <Link to="/signin" className="f3 link dim black underline pa3 pointer">
+        <Link
+          to="/signin"
+          className="f3 link dim black underline pa2 pa3-l pointer"
+        >
           Sign in
         </Link>
         <Link
           to="/register"
-          className="f3 link dim black underline pa3 pointer"
+          className="f3 link dim black underline pa2 pa3-l pointer"
         >
           Register
         </Link>

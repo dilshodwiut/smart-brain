@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Signin({ onSignin }) {
   console.log("[Signin] rendered");
   return (
-    <article className="br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+    <article className="br3 ba b--black-10 mv4 w-100 w-60-m w-40-l mw6 shadow-5 center">
       <main className="pa4 black-80">
         <form className="measure">
           <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -14,7 +14,7 @@ function Signin({ onSignin }) {
                 Email
               </label>
               <input
-                className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                className="pa2 input-reset ba b--black bg-transparent hover-bg-black hover-white w-100"
                 type="email"
                 name="email-address"
                 id="email-address"
@@ -25,7 +25,7 @@ function Signin({ onSignin }) {
                 Password
               </label>
               <input
-                className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
+                className="b pa2 input-reset ba b--black bg-transparent hover-bg-black hover-white w-100"
                 type="password"
                 name="password"
                 id="password"
