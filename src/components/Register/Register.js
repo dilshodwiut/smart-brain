@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Register({ onRegister }) {
   console.log("[Register] rendered");
@@ -50,6 +51,11 @@ function Register({ onRegister }) {
               value="Register"
               onClick={onRegister}
             />
+          </div>
+          <div className="lh-copy mt3 tc">
+            <Link to="/signin" className="f6 link dim black db pointer">
+              Signin
+            </Link>
           </div>
         </form>
       </main>
