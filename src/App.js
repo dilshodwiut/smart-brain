@@ -1,13 +1,15 @@
-import React, { useContext, useCallback } from "react";
-import { Route, Redirect, useHistory } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
 import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
 import Signin from "./components/Signin/Signin";
 import Register from "./components/Register/Register";
+import Rankings from "./components/Rankings/Rankings";
+import Profile from "./components/Profile/Profile";
 import Home from "./components/Home/Home";
-import Auth from "./components/Auth";
+import Welcome from "./components/Welcome";
 import classes from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
 
@@ -51,33 +53,10 @@ export default function App() {
   console.log("[App] rendered");
 
   const authContext = useContext(AuthContext);
-  let history = useHistory();
-
-  const signinHandler = useCallback(
-    (e) => {
-      e.preventDefault();
-      authContext.login();
-      history.push("/home");
-    },
-    [authContext, history]
-  );
-
-  const registerHandler = useCallback(
-    (e) => {
-      e.preventDefault();
-      authContext.login();
-      history.push("/home");
-    },
-    [authContext, history]
-  );
-
-  const signoutHandler = useCallback(() => {
-    authContext.logout();
-  }, [authContext]);
 
   return (
     <Layout>
-      <Navigation isSignedIn={authContext.isAuth} onSignout={signoutHandler} />
+      <Navigation />
       <Logo />
       <AnimatedSwitch
         atEnter={bounceTransition.atEnter}
@@ -86,15 +65,23 @@ export default function App() {
         mapStyles={mapStyles}
         className={classes["route-wrapper"]}
       >
-        <Route path="/signin">
-          <Signin onSignin={signinHandler} />
-        </Route>
-        <Route path="/register">
-          <Register onRegister={registerHandler} />
-        </Route>
+        {!authContext.isAuth && [
+          <Route path="/signin" key="/signin">
+            <Signin />
+          </Route>,
+          <Route path="/register" key="/register">
+            <Register />
+          </Route>,
+        ]}
+        {authContext.isAuth && <Route path="/profile" component={Profile} />}
+        <Route path="/rankings" component={Rankings} />
         <Route path="/home" component={Home} />
         <Route path="/" exact>
-          {authContext.isAuth ? <Redirect to="/home" /> : <Auth />}
+          {authContext.isAuth ? <Redirect to="/home" /> : <Welcome />}
+        </Route>
+        <Route path="*">
+          {/* 404 page */}
+          <Redirect to="/" />
         </Route>
       </AnimatedSwitch>
     </Layout>

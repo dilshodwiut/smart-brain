@@ -1,24 +1,50 @@
-import React from "react";
+import React, { useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/auth-context";
 import classes from "./Navigation.module.css";
 
-function Navigation({ isSignedIn, onSignout }) {
+function Navigation() {
   console.log("[Navigation] rendered");
 
+  const authContext = useContext(AuthContext);
+
+  const signoutHandler = useCallback(() => {
+    authContext.logout();
+    // optional: redirect the user here
+  }, [authContext]);
+
   const Ranking = (
-    <Link to="/rank" className="f3 link dim black underline pa2 pa3-l pointer">
-      Ranking
+    <Link
+      to="/rankings"
+      className="f3 link dim black underline pa2 pa3-l pointer"
+    >
+      Rankings
     </Link>
   );
 
-  if (isSignedIn) {
+  const Profile = (
+    <Link
+      to="/profile"
+      className="f3 link dim black underline pa2 pa3-l poiner"
+    >
+      Profile
+    </Link>
+  );
+
+  const Home = (
+    <Link to="/home" className="f3 link dim black underline pa2 pa3-l pointer">
+      Home
+    </Link>
+  );
+
+  if (authContext.isAuth) {
     return (
       <nav className={classes.Navbar}>
-        {Ranking}
+        {Ranking} {Profile} {Home}
         <Link
-          to="/signin"
+          to="/"
           className="f3 link dim black underline pa2 pa3-l pointer"
-          onClick={onSignout}
+          onClick={signoutHandler}
         >
           Sign Out
         </Link>

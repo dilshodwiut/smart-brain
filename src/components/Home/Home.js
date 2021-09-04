@@ -1,7 +1,5 @@
-import React, { useState, useCallback, useContext } from "react";
-import { AuthContext } from "../../context/auth-context";
+import React, { useState, useCallback } from "react";
 import Clarifai from "clarifai";
-import Auth from "../Auth";
 import Rank from "./Rank/Rank";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./FaceRecognition/FaceRecognition";
@@ -48,31 +46,22 @@ function Home() {
         .catch(function (err) {
           throw new Error("Error in getting api response", err);
         });
+      // add one point to the rank of this user in database if logged in
     },
     [userInput, calculateFaceLocation]
   );
 
-  const authContext = useContext(AuthContext);
-
-  let content = <Auth />;
-
-  if (authContext.isAuth) {
-    content = (
-      <>
-        <Rank />
-        <ImageLinkForm
-          userInput={userInput}
-          onInputChange={inputChangeHandler}
-          onSubmit={submitHandler}
-        />
-        {userInput && (
-          <FaceRecognition imageUrl={userInput} boxes={insetBoxes} />
-        )}
-      </>
-    );
-  }
-
-  return content;
+  return (
+    <>
+      <Rank />
+      <ImageLinkForm
+        userInput={userInput}
+        onInputChange={inputChangeHandler}
+        onSubmit={submitHandler}
+      />
+      {userInput && <FaceRecognition imageUrl={userInput} boxes={insetBoxes} />}
+    </>
+  );
 }
 
 export default Home;

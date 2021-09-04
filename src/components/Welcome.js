@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
-import { AuthContext } from "../context/auth-context";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
-function Auth() {
-  console.log("[Auth] rendered");
-  const authContext = useContext(AuthContext);
-  const loginHandler = () => {
-    authContext.login();
+function Welcome() {
+  console.log("[Welcome] rendered");
+
+  const history = useHistory();
+
+  const clickHandler = () => {
+    history.push("/home");
   };
 
   return (
@@ -18,7 +20,7 @@ function Auth() {
       </h2>
       <button
         className="f6 no-underline grow dib v-mid bg-blue white ba b--blue ph3 pv2 mb3"
-        onClick={loginHandler}
+        onClick={clickHandler}
       >
         Visit as a guest
       </button>
@@ -33,4 +35,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default Welcome;
