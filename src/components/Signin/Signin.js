@@ -61,7 +61,11 @@ function Signin() {
           const expirationTime = new Date(
             new Date().getTime() + +data.expiresIn * 1000
           );
-          authContext.login(data.idToken, expirationTime.toISOString());
+          authContext.login(
+            data.idToken,
+            expirationTime.toISOString(),
+            data.localId
+          );
           history.replace("/home");
         })
         .catch((err) => console.log("failed in catch", err));

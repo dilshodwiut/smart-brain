@@ -40,7 +40,7 @@ function Navigation() {
   if (authContext.isAuth) {
     return (
       <nav className={classes.Navbar}>
-        {Rankings} {Profile}
+        {Rankings} {Profile} {Home}
         <Link
           to="/"
           className="f3 link dim black underline pa2 pa3-l pointer"
