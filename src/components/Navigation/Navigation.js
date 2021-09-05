@@ -13,7 +13,7 @@ function Navigation() {
     // optional: redirect the user here
   }, [authContext]);
 
-  const Ranking = (
+  const Rankings = (
     <Link
       to="/rankings"
       className="f3 link dim black underline pa2 pa3-l pointer"
@@ -40,7 +40,7 @@ function Navigation() {
   if (authContext.isAuth) {
     return (
       <nav className={classes.Navbar}>
-        {Ranking} {Profile} {Home}
+        {Rankings} {Profile}
         <Link
           to="/"
           className="f3 link dim black underline pa2 pa3-l pointer"
@@ -53,7 +53,7 @@ function Navigation() {
   } else {
     return (
       <nav className={classes.Navbar}>
-        {Ranking}
+        {Rankings} {Home}
         <Link
           to="/signin"
           className="f3 link dim black underline pa2 pa3-l pointer"

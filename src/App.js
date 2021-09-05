@@ -65,6 +65,7 @@ export default function App() {
         mapStyles={mapStyles}
         className={classes["route-wrapper"]}
       >
+        {/* React.Fragment doesn't work to wrap routes */}
         {!authContext.isAuth && [
           <Route path="/signin" key="/signin">
             <Signin />
