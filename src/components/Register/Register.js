@@ -9,7 +9,7 @@ function Register() {
 
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
-  // const nameInputRef = useRef();
+  const nameInputRef = useRef();
 
   let history = useHistory();
 
@@ -21,7 +21,7 @@ function Register() {
 
       const enteredEmail = emailInputRef.current.value;
       const enteredPassword = passwordInputRef.current.value;
-      // const enteredName = nameInputRef.current.value;
+      const enteredName = nameInputRef.current.value;
 
       // add validation
 
@@ -34,7 +34,6 @@ function Register() {
           body: JSON.stringify({
             email: enteredEmail,
             password: enteredPassword,
-            // name: enteredName,
             returnSecureToken: true,
           }),
           headers: {
@@ -61,6 +60,32 @@ function Register() {
         })
         .then((data) => {
           console.log(data);
+          fetch(
+            "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/usernames.json",
+            {
+              method: "PATCH",
+              body: JSON.stringify({ [enteredName]: `${data.localId}` }),
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          fetch(
+            "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json",
+            {
+              method: "PATCH",
+              body: JSON.stringify({
+                [data.localId]: {
+                  email: enteredEmail,
+                  points: 0,
+                  username: enteredName,
+                },
+              }),
+              headers: { "Content-Type": "application/json" },
+            }
+          );
+          authContext.getCredentials({
+            username: enteredName,
+            points: 0,
+          });
           const expirationTime = new Date(
             new Date().getTime() + +data.expiresIn * 1000
           );
@@ -82,7 +107,7 @@ function Register() {
         <form className="measure" onSubmit={submitHandler}>
           <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
             <legend className="f1 fw6 ph0 mh0 w-100 tc">Register</legend>
-            {/* <div className="mt3">
+            <div className="mt3">
               <label className="db fw6 lh-copy f6 tc" htmlFor="name">
                 Name
               </label>
@@ -93,7 +118,7 @@ function Register() {
                 id="name"
                 ref={nameInputRef}
               />
-            </div> */}
+            </div>
             <div className="mt3">
               <label className="db fw6 lh-copy f6 tc" htmlFor="email-address">
                 Email
@@ -127,11 +152,6 @@ function Register() {
                 value="Register"
               />
             )}
-            {/* <input
-              className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-              type="submit"
-              value="Register"
-            /> */}
             {isLoading && <p>Sending request...</p>}
           </div>
           <div className="lh-copy mt3 tc">

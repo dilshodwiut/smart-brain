@@ -3,6 +3,11 @@ import React, { useState, useEffect, useCallback } from "react";
 let logoutTimer;
 
 export const AuthContext = React.createContext({
+  credentials: {
+    username: "",
+    points: "",
+  },
+  getCredentials: () => {},
   token: "",
   uid: "",
   isAuth: false,
@@ -30,6 +35,7 @@ const retrieveStoredData = () => {
   if (remainingTime <= 60000) {
     localStorage.removeItem("token");
     localStorage.removeItem("expiresAt");
+    localStorage.removeItem("uid");
     return null;
   }
 
@@ -45,13 +51,20 @@ const AuthContextProvider = (props) => {
   let initialToken, initialUid;
   if (storedData) {
     initialToken = storedData.token;
+    initialUid = storedData.uid;
   }
   const [token, setToken] = useState(initialToken);
   const [uid, setUid] = useState(initialUid);
+  const [credentials, setCredentials] = useState({});
 
   const userIsLoggedIn = !!token;
 
+  const getCredentials = (credentials) => {
+    setCredentials(credentials);
+  };
+
   const logoutHandler = useCallback(() => {
+    setCredentials({});
     setToken(null);
     setUid(null);
     localStorage.removeItem("token");
@@ -87,9 +100,11 @@ const AuthContextProvider = (props) => {
   return (
     <AuthContext.Provider
       value={{
+        credentials: credentials,
         token: token,
         uid: uid,
         isAuth: userIsLoggedIn,
+        getCredentials: getCredentials,
         login: loginHandler,
         logout: logoutHandler,
       }}

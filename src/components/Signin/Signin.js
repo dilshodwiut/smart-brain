@@ -1,4 +1,4 @@
-import React, { useRef, useContext, useCallback } from "react";
+import React, { useState, useRef, useContext, useCallback } from "react";
 import { AuthContext } from "../../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 
@@ -12,7 +12,7 @@ function Signin() {
 
   let history = useHistory();
 
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const submitHandler = useCallback(
     (e) => {
@@ -23,7 +23,7 @@ function Signin() {
 
       // add validation
 
-      // setIsLoading(true);
+      setIsLoading(true);
 
       fetch(
         "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCJgVBuxrNjLa2VeYMY2I-_95ochdVZXzs",
@@ -40,7 +40,7 @@ function Signin() {
         }
       )
         .then((res) => {
-          // setIsLoading(false);
+          setIsLoading(false);
           if (res.ok) {
             console.log("res is ok", res);
             return res.json();
@@ -58,6 +58,14 @@ function Signin() {
         })
         .then((data) => {
           console.log(data);
+          fetch(
+            `https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users/${data.localId}.json`
+          )
+            .then((res2) => res2.json())
+            .then((data2) => {
+              authContext.getCredentials(data2);
+            });
+
           const expirationTime = new Date(
             new Date().getTime() + +data.expiresIn * 1000
           );
@@ -105,11 +113,14 @@ function Signin() {
             </div>
           </fieldset>
           <div className="tc">
-            <input
-              className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
-              type="submit"
-              value="Sign in"
-            />
+            {!isLoading && (
+              <input
+                className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+                type="submit"
+                value="Sign in"
+              />
+            )}
+            {isLoading && <p>Sending request...</p>}
           </div>
           <div className="lh-copy mt3 tc">
             <Link to="/register" className="f6 link dim black db pointer">
