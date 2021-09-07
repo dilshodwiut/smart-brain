@@ -12,6 +12,7 @@ import Home from "./components/Home/Home";
 import Welcome from "./components/Welcome";
 import classes from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
+import FourOFour from "./components/404/FourOFour";
 
 // we need to map the `scale` prop we define below
 // to the transform style property
@@ -82,7 +83,7 @@ export default function App() {
         </Route>
         <Route path="*">
           {/* 404 page */}
-          <Redirect to="/" />
+          <FourOFour />
         </Route>
       </AnimatedSwitch>
     </Layout>
