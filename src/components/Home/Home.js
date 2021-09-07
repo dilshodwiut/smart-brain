@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import Clarifai from "clarifai";
-import Rank from "./Rank/Rank";
+import Points from "./Points/Points";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./FaceRecognition/FaceRecognition";
 
@@ -53,7 +53,7 @@ function Home() {
 
   return (
     <>
-      <Rank />
+      <Points />
       <ImageLinkForm
         userInput={userInput}
         onInputChange={inputChangeHandler}

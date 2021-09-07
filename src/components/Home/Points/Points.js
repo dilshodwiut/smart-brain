@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../../context/auth-context";
 
-const Rank = React.memo(() => {
-  console.log("[Rank] rendered");
+const Points = React.memo(() => {
+  console.log("[Points] rendered");
   const authContext = useContext(AuthContext);
 
   return (
@@ -10,7 +10,7 @@ const Rank = React.memo(() => {
       <div className="white f3 tc">
         {authContext.isAuth
           ? `${authContext.credentials.username}, your current points:`
-          : "Guest, you need to authenticate to have a rank!"}
+          : "Guest, you need to authenticate to have points!"}
       </div>
       <div className="white f1 tc mb3">
         {authContext.isAuth ? `#${authContext.credentials.points}` : null}
@@ -19,4 +19,4 @@ const Rank = React.memo(() => {
   );
 });
 
-export default Rank;
+export default Points;
