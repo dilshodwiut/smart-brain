@@ -1,6 +1,6 @@
 export default function FourOFour() {
   return (
-    <section class="vh-100 bg-washed-blue baskerville">
+    <section>
       <header class="tc ph5 lh-copy">
         <h1 class="f1 f-headline-l code mb3 fw9 dib tracked-tight light-purple">
           404

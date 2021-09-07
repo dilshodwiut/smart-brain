@@ -2,7 +2,7 @@ export default function Rankings() {
   return (
     <div class="pa4">
       <div class="overflow-auto">
-        <table class="f6 w-100 mw8 center" cellspacing="0">
+        <table class="w-100 mw8 center" cellspacing="0">
           <thead>
             <tr class="stripe-dark">
               <th class="fw6 tl pa3 bg-white">Name</th>
