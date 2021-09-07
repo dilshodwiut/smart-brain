@@ -1,47 +1,69 @@
+import { useEffect, useState } from "react";
+
 export default function Rankings() {
+  console.log("[Rankings rendered]");
+
+  const [fetchedUsers, setFetchedUsers] = useState([]);
+
+  function* numberGenerator() {
+    let num = 1;
+    while (true) {
+      yield num;
+      num++;
+    }
+  }
+
+  const generatorObj = numberGenerator();
+
+  useEffect(() => {
+    let arrOfUsers = [];
+    fetch(
+      "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        for (const user in data) {
+          arrOfUsers.push({
+            id: user,
+            username: data[user].username,
+            email: data[user].email,
+            points: data[user].points,
+          });
+        }
+        arrOfUsers.sort((a, b) => b.points - a.points);
+        setFetchedUsers(arrOfUsers);
+      });
+    return () => {
+      // that doesn't work for some reason
+      // for (let i = 0; i < arrOfUsers.length; i++ ) {
+      //   arrOfUsers.pop()
+      // };
+      arrOfUsers = [];
+    };
+  }, []);
+
   return (
-    <div class="pa4">
-      <div class="overflow-auto">
-        <table class="w-100 mw8 center" cellspacing="0">
+    <div className="pa4">
+      <div className="overflow-auto">
+        <table className="w-100 mw8 center" cellSpacing="0">
           <thead>
-            <tr class="stripe-dark">
-              <th class="fw6 tl pa3 bg-white">Name</th>
-              <th class="fw6 tl pa3 bg-white">Username</th>
-              <th class="fw6 tl pa3 bg-white">Email</th>
-              <th class="fw6 tl pa3 bg-white">ID</th>
+            <tr className="stripe-dark">
+              <th className="fw6 tl pa3 bg-white">Top</th>
+              <th className="fw6 tl pa3 bg-white">Username</th>
+              <th className="fw6 tl pa3 bg-white">Email</th>
+              <th className="fw6 tl pa3 bg-white">Points</th>
             </tr>
           </thead>
-          <tbody class="lh-copy">
-            <tr class="stripe-dark">
-              <td class="pa3">Hassan Johnson</td>
-              <td class="pa3">@hassan</td>
-              <td class="pa3">hassan@companywithalongdomain.co</td>
-              <td class="pa3">14419232532474</td>
-            </tr>
-            <tr class="stripe-dark">
-              <td class="pa3">Taral Hicks</td>
-              <td class="pa3">@hicks</td>
-              <td class="pa3">taral@companywithalongdomain.co</td>
-              <td class="pa3">72326219423551</td>
-            </tr>
-            <tr class="stripe-dark">
-              <td class="pa3">Tyrin Turner</td>
-              <td class="pa3">@tt</td>
-              <td class="pa3">ty@companywithalongdomain.co</td>
-              <td class="pa3">92325170324444</td>
-            </tr>
-            <tr class="stripe-dark">
-              <td class="pa3">Oliver Grant</td>
-              <td class="pa3">@oli</td>
-              <td class="pa3">oliverg@companywithalongdomain.co</td>
-              <td class="pa3">71165170352909</td>
-            </tr>
-            <tr class="stripe-dark">
-              <td class="pa3">Dean Blanc</td>
-              <td class="pa3">@deanblanc</td>
-              <td class="pa3">dean@companywithalongdomain.co</td>
-              <td class="pa3">71865178111909</td>
-            </tr>
+          <tbody className="lh-copy">
+            {fetchedUsers &&
+              fetchedUsers.map((user) => (
+                <tr className="stripe-dark" key={user.id}>
+                  <th className="pa3 tl">{generatorObj.next().value}</th>
+                  <td className="pa3">@{user.username}</td>
+                  <td className="pa3">{user.email}</td>
+                  <td className="pa3">{user.points}</td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
