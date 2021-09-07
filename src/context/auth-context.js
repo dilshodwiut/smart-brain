@@ -29,6 +29,7 @@ const retrieveStoredData = () => {
   const storedToken = localStorage.getItem("token");
   const storedExpirationDate = localStorage.getItem("expiresAt");
   const storedUid = localStorage.getItem("uid");
+  const storedCredentials = JSON.parse(localStorage.getItem("credentials"));
 
   const remainingTime = calculateRemainingTime(storedExpirationDate);
 
@@ -36,6 +37,7 @@ const retrieveStoredData = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("expiresAt");
     localStorage.removeItem("uid");
+    localStorage.removeItem("credentials");
     return null;
   }
 
@@ -43,25 +45,28 @@ const retrieveStoredData = () => {
     token: storedToken,
     duration: remainingTime,
     uid: storedUid,
+    credentials: storedCredentials,
   };
 };
 
 const AuthContextProvider = (props) => {
   const storedData = retrieveStoredData();
-  let initialToken, initialUid;
+  let initialToken, initialUid, initialCredentials;
   if (storedData) {
     initialToken = storedData.token;
     initialUid = storedData.uid;
+    initialCredentials = storedData.credentials;
   }
   const [token, setToken] = useState(initialToken);
   const [uid, setUid] = useState(initialUid);
-  const [credentials, setCredentials] = useState({});
+  const [credentials, setCredentials] = useState(initialCredentials);
 
   const userIsLoggedIn = !!token;
 
-  const getCredentials = (credentials) => {
+  const getCredentials = useCallback((credentials) => {
     setCredentials(credentials);
-  };
+    localStorage.setItem("credentials", JSON.stringify(credentials));
+  }, []);
 
   const logoutHandler = useCallback(() => {
     setCredentials({});
@@ -70,6 +75,7 @@ const AuthContextProvider = (props) => {
     localStorage.removeItem("token");
     localStorage.removeItem("expiresAt");
     localStorage.removeItem("uid");
+    localStorage.removeItem("credentials");
 
     if (logoutTimer) {
       clearTimeout(logoutTimer);

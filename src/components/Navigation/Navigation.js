@@ -40,7 +40,7 @@ function Navigation() {
   if (authContext.isAuth) {
     return (
       <nav className={classes.Navbar}>
-        {Rankings} {Profile} {Home}
+        {Home} {Rankings} {Profile}
         <Link
           to="/"
           className="f3 link dim black underline pa2 pa3-l pointer"
@@ -53,7 +53,7 @@ function Navigation() {
   } else {
     return (
       <nav className={classes.Navbar}>
-        {Rankings} {Home}
+        {Home} {Rankings}
         <Link
           to="/signin"
           className="f3 link dim black underline pa2 pa3-l pointer"

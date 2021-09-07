@@ -82,10 +82,7 @@ function Register() {
               headers: { "Content-Type": "application/json" },
             }
           );
-          authContext.getCredentials({
-            username: enteredName,
-            points: 0,
-          });
+
           const expirationTime = new Date(
             new Date().getTime() + +data.expiresIn * 1000
           );
@@ -94,6 +91,7 @@ function Register() {
             expirationTime.toISOString(),
             data.localId
           );
+          authContext.getCredentials({ username: enteredName, points: 0 });
           history.replace("/home");
         })
         .catch((err) => console.log("failed in catch", err));
