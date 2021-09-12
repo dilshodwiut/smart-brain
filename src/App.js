@@ -4,15 +4,15 @@ import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
 import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
-import Signin from "./components/Signin/Signin";
-import Register from "./components/Register/Register";
-import Rankings from "./components/Rankings/Rankings";
-import Profile from "./components/Profile/Profile";
-import Home from "./components/Home/Home";
-import Welcome from "./components/Welcome";
+import Signin from "./routes/Signin/Signin";
+import Register from "./routes/Register/Register";
+import Rankings from "./routes/Rankings/Rankings";
+import Profile from "./routes/Profile/Profile";
+import Home from "./routes/Home/Home";
+import Welcome from "./routes/Welcome";
 import classes from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
-import FourOFour from "./components/404/FourOFour";
+import FourOFour from "./routes/404/FourOFour";
 
 // we need to map the `scale` prop we define below
 // to the transform style property
