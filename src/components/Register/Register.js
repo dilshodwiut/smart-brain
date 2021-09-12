@@ -1,4 +1,10 @@
-import React, { useState, useRef, useContext, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
 import { AuthContext } from "../../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 
@@ -7,13 +13,32 @@ function Register() {
 
   const authContext = useContext(AuthContext);
 
+  const [isLoading, setIsLoading] = useState(false);
+  const [usernames, setUsernames] = useState(null);
+  const [name, setName] = useState("");
+
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const nameInputRef = useRef();
 
   let history = useHistory();
 
-  const [isLoading, setIsLoading] = useState(false);
+  const nameChangeHandler = (e) => {
+    setName(e.target.value);
+  };
+
+  useEffect(() => {
+    fetch(
+      "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/usernames.json"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setUsernames(Object.keys(data));
+      });
+    // return () => {
+    //   cleanup;
+    // };
+  }, []);
 
   const submitHandler = useCallback(
     (e) => {
@@ -115,7 +140,22 @@ function Register() {
                 name="name"
                 id="name"
                 ref={nameInputRef}
+                onChange={nameChangeHandler}
               />
+              {usernames && usernames.includes(name) && (
+                <small
+                  id="name-desc"
+                  className="f6 black-60 db mb2 mt2"
+                  style={{ color: "red" }}
+                >{`${name} already exists`}</small>
+              )}
+              {usernames && !usernames.includes(name) && name.length >= 3 && (
+                <small
+                  id="name-desc"
+                  className="f6 black-60 db mb2 mt2"
+                  style={{ color: "green" }}
+                >{`${name} is available`}</small>
+              )}
             </div>
             <div className="mt3">
               <label className="db fw6 lh-copy f6 tc" htmlFor="email-address">
