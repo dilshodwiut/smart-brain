@@ -9,7 +9,7 @@ import Register from "./routes/Register/Register";
 import Rankings from "./routes/Rankings/Rankings";
 import Profile from "./routes/Profile/Profile";
 import Home from "./routes/Home/Home";
-import Welcome from "./routes/Welcome";
+import Welcome from "./routes/Welcome/Welcome";
 import classes from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
 import FourOFour from "./routes/404/FourOFour";
@@ -68,22 +68,36 @@ export default function App() {
       >
         {/* React.Fragment doesn't work to wrap routes */}
         {!authContext.isAuth && [
-          <Route path="/signin" key="/signin">
-            <Signin />
-          </Route>,
-          <Route path="/register" key="/register">
-            <Register />
-          </Route>,
+          <Route
+            path="/signin"
+            key="/signin"
+            render={(props) => <Signin title="Sign in" />}
+          />,
+          <Route
+            path="/register"
+            key="/register"
+            render={(props) => <Register title="Register" />}
+          />,
         ]}
-        {authContext.isAuth && <Route path="/profile" component={Profile} />}
-        <Route path="/rankings" component={Rankings} />
+        {authContext.isAuth && (
+          <Route path="/profile">
+            <Profile title="Profile" />
+          </Route>
+        )}
+        <Route path="/rankings">
+          <Rankings title="Rankings" />
+        </Route>
         <Route path="/home" component={Home} />
         <Route path="/" exact>
-          {authContext.isAuth ? <Redirect to="/home" /> : <Welcome />}
+          {authContext.isAuth ? (
+            <Redirect to="/home" />
+          ) : (
+            <Welcome title="Welcome" />
+          )}
         </Route>
         <Route path="*">
           {/* 404 page */}
-          <FourOFour />
+          <FourOFour title="Page not found" />
         </Route>
       </AnimatedSwitch>
     </Layout>

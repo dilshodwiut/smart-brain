@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-function Welcome() {
+function Welcome(props) {
   console.log("[Welcome] rendered");
 
   const history = useHistory();
+
+  useEffect(() => {
+    document.title = props.title || "Smart Brain";
+  }, [props.title]);
 
   const clickHandler = () => {
     history.push("/home");

@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 
-export default function Rankings() {
+export default function Rankings(props) {
   console.log("[Rankings rendered]");
+
+  useEffect(() => {
+    document.title = props.title || "Smart Brain";
+  }, [props.title]);
 
   const [fetchedUsers, setFetchedUsers] = useState([]);
 

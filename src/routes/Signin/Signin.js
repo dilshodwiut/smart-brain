@@ -1,11 +1,21 @@
-import React, { useState, useRef, useContext, useCallback } from "react";
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
 import { AuthContext } from "../../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 
-function Signin() {
+function Signin(props) {
   console.log("[Signin] rendered");
 
   const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    document.title = props.title || "Smart Brain";
+  }, [props.title]);
 
   const emailInputRef = useRef();
   const passwordInputRef = useRef();

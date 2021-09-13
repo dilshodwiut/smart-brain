@@ -8,10 +8,14 @@ import React, {
 import { AuthContext } from "../../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 
-function Register() {
+function Register(props) {
   console.log("[Register] rendered");
 
   const authContext = useContext(AuthContext);
+
+  useEffect(() => {
+    document.title = props.title || "Smart Brain";
+  }, [props.title]);
 
   const [isLoading, setIsLoading] = useState(false);
   const [usernames, setUsernames] = useState(null);

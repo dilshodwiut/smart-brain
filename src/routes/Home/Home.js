@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import Clarifai from "clarifai";
 import Points from "./Points/Points";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
@@ -8,8 +8,13 @@ const app = new Clarifai.App({
   apiKey: "da83cb85013349cd9208ff3964b606f5",
 });
 
-function Home() {
+function Home(props) {
   console.log("[Home] rendered");
+
+  useEffect(() => {
+    document.title = props.title || "Smart Brain";
+  }, [props.title]);
+
   const [userInput, setUserInput] = useState("");
   const [insetBoxes, setInsetBoxes] = useState([]);
 

@@ -1,4 +1,10 @@
-export default function FourOFour() {
+import { useEffect } from "react";
+
+export default function FourOFour(props) {
+  useEffect(() => {
+    document.title = props.title || "Smart Brain";
+  }, [props.title]);
+
   return (
     <section>
       <header className="tc ph5 lh-copy">
