@@ -35,6 +35,7 @@ export default function Rankings(props) {
           });
         }
         arrOfUsers.sort((a, b) => b.points - a.points);
+        arrOfUsers = arrOfUsers.filter((user, index) => index < 10);
         setFetchedUsers(arrOfUsers);
       });
     return () => {
