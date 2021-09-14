@@ -64,7 +64,7 @@ const AuthContextProvider = (props) => {
   const userIsLoggedIn = !!token;
 
   const getCredentials = useCallback((comingCredentials) => {
-    if (comingCredentials.email) {
+    if (comingCredentials.username) {
       setCredentials(comingCredentials);
       localStorage.setItem("credentials", JSON.stringify(comingCredentials));
     } else {
