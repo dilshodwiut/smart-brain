@@ -14,10 +14,17 @@ function Home(props) {
 
   const authContext = useContext(AuthContext);
 
-  const initialCount = authContext.isAuth
-    ? authContext.credentials.points || 0
-    : 0;
-  const [counter, setCounter] = useState(initialCount);
+  useEffect(() => {
+    if (
+      authContext.isAuth &&
+      authContext.credentials &&
+      authContext.credentials.points
+    ) {
+      setCounter(authContext.credentials.points);
+    }
+  }, [authContext.credentials, authContext.isAuth]);
+
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     document.title = props.title || "Smart Brain";
