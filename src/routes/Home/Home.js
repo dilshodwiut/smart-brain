@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
+import { AuthContext } from "../../context/auth-context";
 import Clarifai from "clarifai";
 import Points from "./Points/Points";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
@@ -10,6 +11,13 @@ const app = new Clarifai.App({
 
 function Home(props) {
   console.log("[Home] rendered");
+
+  const authContext = useContext(AuthContext);
+
+  const initialCount = authContext.isAuth
+    ? authContext.credentials.points || 0
+    : 0;
+  const [counter, setCounter] = useState(initialCount);
 
   useEffect(() => {
     document.title = props.title || "Smart Brain";
@@ -43,22 +51,40 @@ function Home(props) {
 
   const submitHandler = useCallback(
     function () {
-      app.models
-        .predict(Clarifai.FACE_DETECT_MODEL, userInput)
-        .then(function (res) {
-          setInsetBoxes(calculateFaceLocation(res.outputs[0].data.regions));
-        })
-        .catch(function (err) {
-          throw new Error("Error in getting api response", err);
-        });
-      // add one point to the rank of this user in database if logged in
+      if (!insetBoxes.length) {
+        app.models
+          .predict(Clarifai.FACE_DETECT_MODEL, userInput)
+          .then(function (res) {
+            setInsetBoxes(calculateFaceLocation(res.outputs[0].data.regions));
+            // add one point to the rank of this user in database if logged in
+            authContext.getCredentials({ points: counter + 1 });
+            fetch(
+              "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json",
+              {
+                method: "PATCH",
+                body: JSON.stringify({
+                  [authContext.uid]: {
+                    points: authContext.credentials.points + 1,
+                    email: authContext.credentials.email,
+                    username: authContext.credentials.username,
+                  },
+                }),
+                headers: { "Content-Type": "application/json" },
+              }
+            );
+            setCounter(counter + 1);
+          })
+          .catch(function (err) {
+            throw new Error("Error in getting api response", err);
+          });
+      }
     },
-    [userInput, calculateFaceLocation]
+    [userInput, calculateFaceLocation, counter, insetBoxes.length, authContext]
   );
 
   return (
     <>
-      <Points />
+      <Points points={counter} />
       <ImageLinkForm
         userInput={userInput}
         onInputChange={inputChangeHandler}

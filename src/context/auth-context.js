@@ -63,9 +63,30 @@ const AuthContextProvider = (props) => {
 
   const userIsLoggedIn = !!token;
 
-  const getCredentials = useCallback((credentials) => {
-    setCredentials(credentials);
-    localStorage.setItem("credentials", JSON.stringify(credentials));
+  const getCredentials = useCallback((comingCredentials) => {
+    if (comingCredentials.email) {
+      setCredentials(comingCredentials);
+      localStorage.setItem("credentials", JSON.stringify(comingCredentials));
+    } else {
+      setCredentials((prevCredentials) => {
+        let newCredentials;
+        if (typeof prevCredentials == undefined) {
+          newCredentials = {
+            points: comingCredentials.points,
+            email: "",
+            username: "",
+          };
+        } else {
+          newCredentials = {
+            points: comingCredentials.points,
+            email: prevCredentials.email,
+            username: prevCredentials.username,
+          };
+        }
+        localStorage.setItem("credentials", JSON.stringify(newCredentials));
+        return newCredentials;
+      });
+    }
   }, []);
 
   const logoutHandler = useCallback(() => {

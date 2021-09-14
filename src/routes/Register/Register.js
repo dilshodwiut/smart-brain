@@ -115,12 +115,12 @@ function Register(props) {
           const expirationTime = new Date(
             new Date().getTime() + +data.expiresIn * 1000
           );
+          authContext.getCredentials({ username: enteredName, points: 0 });
           authContext.login(
             data.idToken,
             expirationTime.toISOString(),
             data.localId
           );
-          authContext.getCredentials({ username: enteredName, points: 0 });
           history.replace("/home");
         })
         .catch((err) => console.log("failed in catch", err));

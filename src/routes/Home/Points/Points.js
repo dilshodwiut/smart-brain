@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../../../context/auth-context";
 
-const Points = React.memo(() => {
+const Points = (props) => {
   console.log("[Points] rendered");
   const authContext = useContext(AuthContext);
 
@@ -13,10 +13,10 @@ const Points = React.memo(() => {
           : "Guest, you need to authenticate to have points!"}
       </div>
       <div className="white f1 tc mb3">
-        {authContext.isAuth ? `#${authContext.credentials.points}` : null}
+        {authContext.isAuth ? `#${props.points}` : null}
       </div>
     </>
   );
-});
+};
 
 export default Points;

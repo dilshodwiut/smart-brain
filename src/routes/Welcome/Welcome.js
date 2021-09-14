@@ -17,7 +17,7 @@ function Welcome(props) {
   return (
     <div className="tc-l mt4 mt5-m mt6-l ph3">
       <h1 className="f2 f1-l fw2 white-90 mb0 lh-title">
-        This Magic Brain will detect faces in your pictures
+        Magic Brain &mdash; face detection app
       </h1>
       <h2 className="fw1 f3 white-80 mt3 mb4">
         Multiple face detections in a single image is supported!
