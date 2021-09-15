@@ -32,6 +32,7 @@ function Home(props) {
 
   const [userInput, setUserInput] = useState("");
   const [insetBoxes, setInsetBoxes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const inputChangeHandler = useCallback((e) => {
     setUserInput(e.target.value);
@@ -56,15 +57,21 @@ function Home(props) {
     return insetBoxes;
   }, []);
 
+  // useEffect(() => {
+  //   setIsLoading(true);
+  // }, []);
+
   const submitHandler = useCallback(
     function () {
       if (!insetBoxes.length) {
+        setIsLoading(true);
         app.models
           .predict(Clarifai.FACE_DETECT_MODEL, userInput)
           .then(function (res) {
             const regions = res.outputs[0].data.regions;
             setInsetBoxes(calculateFaceLocation(regions));
             authContext.getCredentials({ points: counter + regions.length });
+            setIsLoading(false);
             fetch(
               "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json",
               {
@@ -96,7 +103,13 @@ function Home(props) {
         onInputChange={inputChangeHandler}
         onSubmit={submitHandler}
       />
-      {userInput && <FaceRecognition imageUrl={userInput} boxes={insetBoxes} />}
+      {userInput && (
+        <FaceRecognition
+          imageUrl={userInput}
+          boxes={insetBoxes}
+          isLoading={isLoading}
+        />
+      )}
     </>
   );
 }

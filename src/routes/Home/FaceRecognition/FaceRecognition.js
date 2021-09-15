@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./FaceRecognition.module.css";
 
-function FaceRecognition({ imageUrl, boxes }) {
+function FaceRecognition({ imageUrl, boxes, isLoading }) {
   console.log("[FaceRecognition] rendered");
 
   let insetBoxes = [];
@@ -11,7 +11,6 @@ function FaceRecognition({ imageUrl, boxes }) {
       return (
         <div
           key={index}
-          className={classes.Box}
           style={{
             position: "absolute",
             boxShadow: "0 0 0 3px #149df2 inset",
@@ -37,6 +36,11 @@ function FaceRecognition({ imageUrl, boxes }) {
         src={imageUrl}
         alt="Error"
       />
+      {isLoading ? (
+        <div className={classes.Backdrop}>
+          <div className={classes.Preloader}>Loading...</div>
+        </div>
+      ) : null}
       {insetBoxes === [] ? null : insetBoxes}
     </div>
   );
