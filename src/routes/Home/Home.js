@@ -62,16 +62,16 @@ function Home(props) {
         app.models
           .predict(Clarifai.FACE_DETECT_MODEL, userInput)
           .then(function (res) {
-            setInsetBoxes(calculateFaceLocation(res.outputs[0].data.regions));
-            // add one point to the rank of this user in database if logged in
-            authContext.getCredentials({ points: counter + 1 });
+            const regions = res.outputs[0].data.regions;
+            setInsetBoxes(calculateFaceLocation(regions));
+            authContext.getCredentials({ points: counter + regions.length });
             fetch(
               "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json",
               {
                 method: "PATCH",
                 body: JSON.stringify({
                   [authContext.uid]: {
-                    points: authContext.credentials.points + 1,
+                    points: authContext.credentials.points + regions.length,
                     email: authContext.credentials.email,
                     username: authContext.credentials.username,
                   },
@@ -79,7 +79,6 @@ function Home(props) {
                 headers: { "Content-Type": "application/json" },
               }
             );
-            setCounter(counter + 1);
           })
           .catch(function (err) {
             throw new Error("Error in getting api response", err);
