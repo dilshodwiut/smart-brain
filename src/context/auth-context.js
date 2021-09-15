@@ -70,7 +70,7 @@ const AuthContextProvider = (props) => {
     } else {
       setCredentials((prevCredentials) => {
         let newCredentials;
-        if (typeof prevCredentials == undefined) {
+        if (prevCredentials === undefined) {
           newCredentials = {
             points: comingCredentials.points,
             email: "",

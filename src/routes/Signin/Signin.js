@@ -73,16 +73,17 @@ function Signin(props) {
           )
             .then((res2) => res2.json())
             .then((data2) => {
-              const expirationTime = new Date(
-                new Date().getTime() + +data.expiresIn * 1000
-              );
-              authContext.login(
-                data.idToken,
-                expirationTime.toISOString(),
-                data.localId
-              );
               authContext.getCredentials(data2);
             });
+          const expirationTime = new Date(
+            new Date().getTime() + +data.expiresIn * 1000
+          );
+          authContext.login(
+            data.idToken,
+            expirationTime.toISOString(),
+            data.localId
+          );
+          authContext.getCredentials({ username: "", email: "", points: 0 });
           history.replace("/home");
         })
         .catch((err) => console.log("failed in catch", err));
