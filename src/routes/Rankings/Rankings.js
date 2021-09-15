@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import Backdrop from "../../components/Backdrop/Backdrop";
+import Preloader from "../../components/Preloader/Preloader";
 
 export default function Rankings(props) {
   console.log("[Rankings rendered]");
@@ -60,6 +62,18 @@ export default function Rankings(props) {
             </tr>
           </thead>
           <tbody className="lh-copy">
+            {!fetchedUsers.length && (
+              <tr>
+                <th
+                  style={{ position: "relative", height: "560px" }}
+                  colSpan="4"
+                >
+                  <Backdrop>
+                    <Preloader>Please wait...</Preloader>
+                  </Backdrop>
+                </th>
+              </tr>
+            )}
             {fetchedUsers &&
               fetchedUsers.map((user) => (
                 <tr className="stripe-dark" key={user.id}>

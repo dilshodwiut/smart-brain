@@ -1,5 +1,7 @@
 import React from "react";
 import classes from "./FaceRecognition.module.css";
+import Backdrop from "../../../components/Backdrop/Backdrop";
+import Preloader from "../../../components/Preloader/Preloader";
 
 function FaceRecognition({ imageUrl, boxes, isLoading }) {
   console.log("[FaceRecognition] rendered");
@@ -37,9 +39,9 @@ function FaceRecognition({ imageUrl, boxes, isLoading }) {
         alt="Error"
       />
       {isLoading ? (
-        <div className={classes.Backdrop}>
-          <div className={classes.Preloader}>Loading...</div>
-        </div>
+        <Backdrop>
+          <Preloader></Preloader>
+        </Backdrop>
       ) : null}
       {insetBoxes === [] ? null : insetBoxes}
     </div>

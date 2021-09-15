@@ -72,6 +72,7 @@ function Home(props) {
             setInsetBoxes(calculateFaceLocation(regions));
             authContext.getCredentials({ points: counter + regions.length });
             setIsLoading(false);
+            // fetch without .then() returns promise and function stops
             fetch(
               "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json",
               {
