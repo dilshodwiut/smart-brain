@@ -70,7 +70,9 @@ function Home(props) {
           .then(function (res) {
             const regions = res.outputs[0].data.regions;
             setInsetBoxes(calculateFaceLocation(regions));
-            authContext.getCredentials({ points: counter + regions.length });
+            if (authContext.isAuth) {
+              authContext.getCredentials({ points: counter + regions.length });
+            }
             setIsLoading(false);
             // fetch without .then() returns promise and function stops
             fetch(
