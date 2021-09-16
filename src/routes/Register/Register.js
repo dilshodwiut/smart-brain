@@ -39,9 +39,6 @@ function Register(props) {
       .then((data) => {
         setUsernames(Object.keys(data));
       });
-    // return () => {
-    //   cleanup;
-    // };
   }, []);
 
   const submitHandler = useCallback(

@@ -5,5 +5,13 @@ export default function Profile(props) {
     document.title = props.title || "Smart Brain";
   }, [props.title]);
 
-  return <div>Profile page</div>;
+  return (
+    <section style={{ textAlign: "center" }}>
+      <h1 style={{ fontSize: "5rem" }}>🙇🏻‍♂️</h1>
+      <p>
+        Profile page with full of useful features is to be constructed in the
+        near future. Please, excuse that!
+      </p>
+    </section>
+  );
 }

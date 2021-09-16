@@ -7,7 +7,7 @@ export const AuthContext = React.createContext({
     username: "",
     points: "",
   },
-  getCredentials: () => {},
+  getCredentials: (credentials) => {},
   token: "",
   uid: "",
   isAuth: false,
