@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./FaceRecognition.module.css";
-import Backdrop from "../../../components/Backdrop/Backdrop";
-import Preloader from "../../../components/Preloader/Preloader";
+import Backdrop from "../../../components/UI/Backdrop/Backdrop";
+import Preloader from "../../../components/UI/Preloader/Preloader";
 
 function FaceRecognition({ imageUrl, boxes, isLoading }) {
   console.log("[FaceRecognition] rendered");
