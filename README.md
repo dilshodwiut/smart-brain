@@ -50,18 +50,18 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Tech Stack & Libraies
 
 - [React](https://reactjs.org/)
-- [React Router]()
-- [React Router Transition]()
+- [React Router](https://reactrouter.com/)
+- [React Router Transition](https://maisano.github.io/react-router-transition/)
 - [Create React App](https://facebook.github.io/create-react-app/docs/getting-started)
 - [Firebase](https://firebase.google.com/)
-- [Javascript]()
-- [bg-particles]()
-- [vanilla-tilt]()
-- [CSS Modules]()
+- [Javascript](https://www.javascript.com/)
+- [particles-bg](https://github.com/lindelof/particles-bg)
+- [vanilla-tilt](https://github.com/micku7zu/vanilla-tilt.js#readme)
+- [CSS Modules](https://create-react-app.dev/docs/adding-a-css-modules-stylesheet/)
 - [Tachyons](https://tachyons.io/)
 - [CSS HoneyComb Patter](https://projects.verou.me/css3patterns/)
 - [CSS Preloader](https://projects.lukehaas.me/css-loaders/)
-- [HTML]()
+- [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
 ### Misc
 To view the application visit [smart-brain.dilshod.me](https://smart-brain.dilshod.me/). \
