@@ -1,10 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import ErrorModal from "../../components/ErrorModal/ErrorModal";
 
 function Welcome(props) {
   console.log("[Welcome] rendered");
 
   const history = useHistory();
+
+  const [error, setError] = useState(null);
+  const errorHandler = () => {
+    setError(null);
+  };
+  const showErrorHandler = () => {
+    setError({
+      title: "Error title",
+      message: "Error message",
+      onConfirm: errorHandler,
+    });
+  };
 
   useEffect(() => {
     document.title = props.title || "Smart Brain";
@@ -16,6 +29,13 @@ function Welcome(props) {
 
   return (
     <div className="tc-l mt4 mt5-m mt6-l ph3">
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirm={error.onConfirm}
+        />
+      )}
       <h1 className="f2 f1-l fw2 white-90 mb0 lh-title">
         Magic Brain &mdash; face detection app
       </h1>
@@ -28,13 +48,14 @@ function Welcome(props) {
       >
         Visit as a guest
       </button>
-      {/* <span className="dib v-mid ph3 white-70 mb3">or</span>
-        <a
-          className="f6 no-underline grow dib v-mid white ba b--white ph3 pv2 mb3"
-          href="index.html"
-        >
-          Secondary call to action
-        </a> */}
+      <span className="dib v-mid ph3 white-70 mb3">or</span>
+      <a
+        className="f6 no-underline grow dib v-mid white ba b--white ph3 pv2 mb3"
+        href="#"
+        onClick={showErrorHandler}
+      >
+        Secondary call to action
+      </a>
     </div>
   );
 }
