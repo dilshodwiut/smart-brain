@@ -1,8 +1,16 @@
-# Getting Started with Create React App
+# Smart Brain
+Modern web application to detect faces interactively on online images which utilizes [Clarifai's Face Detection Model](https://www.clarifai.com/).
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Features
+- Face Detection
+- Register / Signin
+- List of top 10 users
+- Points based on detected faces on images
+- Guest mode
+- Keep the user logged in for an hour
+- Protected pages
 
-## Available Scripts
+## How to run locally
 
 In the project directory, you can run:
 
@@ -39,32 +47,26 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Tech Stack & Libraies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [React](https://reactjs.org/)
+- [React Router]()
+- [React Router Transition]()
+- [Create React App](https://facebook.github.io/create-react-app/docs/getting-started)
+- [Firebase](https://firebase.google.com/)
+- [Javascript]()
+- [bg-particles]()
+- [vanilla-tilt]()
+- [CSS Modules]()
+- [Tachyons](https://tachyons.io/)
+- [CSS HoneyComb Patter](https://projects.verou.me/css3patterns/)
+- [CSS Preloader](https://projects.lukehaas.me/css-loaders/)
+- [HTML]()
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Misc
+To view the application visit [smart-brain.dilshod.me](https://smart-brain.dilshod.me/). \
+If you face any bugs, feel free to open an issue or simply let me know via [Telegram](https://t.me/dilshodwiut). \
+To collaborate and/or further develop this application on your own, feel free to fork or clone via [GitHub](https://github.com/dilshodwiut/smart-brain/). \
+If you have new ideas regarding this project or anything else, just let me know via [Telegram](https://t.me/dilshodwiut).
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+*Initially inspired by Andrei Neagoie's Smart Brain project which you can learn more [here](https://www.udemy.com/course/the-complete-web-developer-zero-to-mastery/).*
