@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ErrorModal from "../../components/ErrorModal/ErrorModal";
+import ErrorModal from "../../components/UI/ErrorModal/ErrorModal";
 
 function Welcome(props) {
   console.log("[Welcome] rendered");

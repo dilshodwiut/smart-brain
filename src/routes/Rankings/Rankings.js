@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Backdrop from "../../components/Backdrop/Backdrop";
-import Preloader from "../../components/Preloader/Preloader";
+import Backdrop from "../../components/UI/Backdrop/Backdrop";
+import Preloader from "../../components/UI/Preloader/Preloader";
 
 export default function Rankings(props) {
   console.log("[Rankings rendered]");
