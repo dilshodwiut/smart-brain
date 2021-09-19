@@ -1,14 +1,14 @@
 .Modal {
   position: fixed;
   top: 30vh;
-  left: 10%;
-  width: 80%;
+  left: 25%;
+  width: 50%;
   z-index: 100;
   overflow: hidden;
 }
 
 .Header {
-  background: #4f005f;
+  background: #ff5edf;
   padding: 1rem;
 }
 
