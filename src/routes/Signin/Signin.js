@@ -133,6 +133,7 @@ function Signin(props) {
             {isLoading && <p>Sending request...</p>}
           </div>
           <div className="lh-copy mt3 tc">
+            New User?
             <Link to="/register" className="f6 link dim black db pointer">
               Register
             </Link>

@@ -198,6 +198,7 @@ function Register(props) {
             {isLoading && <p>Sending request...</p>}
           </div>
           <div className="lh-copy mt3 tc">
+            ALready have an account?
             <Link to="/signin" className="f6 link dim black db pointer">
               Signin
             </Link>
