@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
@@ -13,6 +13,7 @@ import Welcome from "./routes/Welcome/Welcome";
 import classes from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
 import FourOFour from "./routes/404/FourOFour";
+import Snackbar from "./components/UI/Snackbar/Snackbar";
 
 // we need to map the `scale` prop we define below
 // to the transform style property
@@ -55,10 +56,20 @@ export default function App() {
 
   const authContext = useContext(AuthContext);
 
+  const animationStyles = { marginRight: "-15%", animation: "slideout 1.2s 1" };
+
+  const [state, setState] = useState(false);
+  setTimeout(() => {
+    setState(true);
+  }, 5000);
+
   return (
     <Layout>
       <Navigation />
       <Logo />
+      <Snackbar style={state ? animationStyles : null}>
+        The app is still in development! Please excuse that!
+      </Snackbar>
       <AnimatedSwitch
         atEnter={bounceTransition.atEnter}
         atLeave={bounceTransition.atLeave}
