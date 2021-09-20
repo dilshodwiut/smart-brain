@@ -51,7 +51,6 @@ function Welcome(props) {
       <span className="dib v-mid ph3 white-70 mb3">or</span>
       <button
         className="f6 no-underline grow dib v-mid white ba b--white ph3 pv2 mb3"
-        href="#"
         onClick={showErrorHandler}
       >
         Secondary call to action

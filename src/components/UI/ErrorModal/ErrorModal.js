@@ -6,7 +6,7 @@ export default function ErrorModal(props) {
   return (
     <>
       {ReactDOM.createPortal(
-        <Backdrop onConfirm={props.onConfirm} />,
+        <Backdrop onConfirm={props.onConfirm} coversFull />,
         document.getElementById("backdrop-root")
       )}
       {ReactDOM.createPortal(
