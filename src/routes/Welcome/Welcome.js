@@ -48,7 +48,7 @@ function Welcome(props) {
       >
         Visit as a guest
       </button>
-      <span className="dib v-mid ph3 white-70 mb3">or</span>
+      {/* <span className="dib v-mid ph3 white-70 mb3">or</span> */}
       {/* <button
         className="f6 no-underline grow dib v-mid blue ba b--white ph3 pv2 mb3"
         onClick={showErrorHandler}
