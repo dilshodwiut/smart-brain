@@ -37,6 +37,7 @@ function Home(props) {
   const inputChangeHandler = useCallback((e) => {
     setUserInput(e.target.value);
     setInsetBoxes([]);
+    setIsLoading(false);
   }, []);
 
   const calculateFaceLocation = useCallback(function (regions) {

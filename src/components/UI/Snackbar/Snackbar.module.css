@@ -2,7 +2,7 @@
   width: 200px;
   padding: 20px;
   position: fixed;
-  top: 20%;
+  top: 7rem;
   margin-top: -48px;
   right: 0;
   margin-right: 5%;
@@ -32,6 +32,6 @@
     margin-right: 5%;
   }
   to {
-    margin-right: -15%;
+    margin-right: -100%;
   }
 }

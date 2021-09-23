@@ -56,7 +56,10 @@ export default function App() {
 
   const authContext = useContext(AuthContext);
 
-  const animationStyles = { marginRight: "-15%", animation: "slideout 1.2s 1" };
+  const animationStyles = {
+    marginRight: "-100%",
+    animation: "slideout 1.2s 1",
+  };
 
   const [state, setState] = useState(false);
   setTimeout(() => {
