@@ -1,5 +1,6 @@
 .Form {
-  width: 700px;
+  max-width: 700px;
+  width: 90%;
   background: radial-gradient(
         circle farthest-side at 0% 50%,
         #fb1 23.5%,
@@ -49,4 +50,11 @@
 
 .Input {
   border: none;
+}
+
+@media screen and (max-width: 479px) {
+  .Form {
+    width: 95%;
+    background-size: 20px 30px;
+  }
 }

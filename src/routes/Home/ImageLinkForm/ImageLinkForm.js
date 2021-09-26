@@ -6,11 +6,15 @@ function ImageLinkForm({ userInput, onInputChange, onSubmit }) {
 
   return (
     <>
-      <p className="f3 tc">
+      <p className="f3 tc mb3-l mb0-ns mb2-m pa4-m pa2">
         {"This Magic Brain will detect faces in your pictures. Give it a try."}
       </p>
       <div className="center">
-        <div className={"pa4 br3 shadow-5 center ".concat(classes.Form)}>
+        <div
+          className={"pa4-l pa4-m pa3 br3 shadow-5 center ".concat(
+            classes.Form
+          )}
+        >
           <input
             className={"f4 pa2 w-70 center input-reset ".concat(classes.Input)}
             type="text"
