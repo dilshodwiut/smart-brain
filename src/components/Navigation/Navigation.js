@@ -2,6 +2,7 @@ import React, { useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 import classes from "./Navigation.module.css";
+import Hamburger from "../UI/Hamburger/Hamburger";
 
 function Navigation() {
   console.log("[Navigation] rendered");
@@ -39,36 +40,43 @@ function Navigation() {
 
   if (authContext.isAuth) {
     return (
-      <nav className={classes.Navbar}>
-        {Home} {Rankings} {Profile}
-        <Link
-          to="/"
-          className="f3 link dim black underline pa2 pa3-l pointer"
-          onClick={signoutHandler}
-        >
-          Sign Out
-        </Link>
-      </nav>
+      <>
+        <Hamburger />
+        <nav className={classes.Navbar}>
+          {Home} {Rankings} {Profile}
+          <Link
+            to="/"
+            className="f3 link dim black underline pa2 pa3-l pointer"
+            onClick={signoutHandler}
+          >
+            Sign Out
+          </Link>
+        </nav>
+      </>
     );
   } else {
     return (
-      <nav className={classes.Navbar}>
-        {Home} {Rankings}
-        <Link
-          to="/signin"
-          className="f3 link dim black underline pa2 pa3-l pointer"
-        >
-          Sign in
-        </Link>
-        <Link
-          to="/register"
-          className="f3 link dim black underline pa2 pa3-l pointer"
-        >
-          Register
-        </Link>
-      </nav>
+      <>
+        <Hamburger />
+        <nav className={classes.Navbar}>
+          {Home} {Rankings}
+          <Link
+            to="/signin"
+            className="f3 link dim black underline pa2 pa3-l pointer"
+          >
+            Sign in
+          </Link>
+          <Link
+            to="/register"
+            className="f3 link dim black underline pa2 pa3-l pointer"
+          >
+            Register
+          </Link>
+        </nav>
+      </>
     );
   }
 }
 
 export default Navigation;
+// max-width: 452px;
