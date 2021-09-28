@@ -2,6 +2,9 @@
   padding: 15px 15px;
   display: none;
   z-index: 100;
+  position: relative; /* z-index has no effect on static elements */
+  margin: 0;
+  margin-left: calc(100% - 70px);
   cursor: pointer;
   -webkit-transition-property: opacity, -webkit-filter;
   transition-property: opacity, -webkit-filter;
@@ -16,7 +19,6 @@
   text-transform: none;
   background-color: transparent;
   border: 0;
-  margin: 0;
   overflow: visible;
 }
 
@@ -134,7 +136,7 @@
     -webkit-transform 0.22s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-@media screen and (max-width: 452px) {
+@media screen and (max-width: 468px) {
   .hamburger {
     display: inline-block;
   }

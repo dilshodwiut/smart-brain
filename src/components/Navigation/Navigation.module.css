@@ -3,7 +3,16 @@
   justify-content: flex-end;
 }
 
-@media screen and (max-width: 452px) {
+.MobileNavbar {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+  height: 100%;
+}
+
+@media screen and (max-width: 468px) {
   .Navbar {
     display: none;
   }
