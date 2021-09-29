@@ -62,6 +62,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 - [Tachyons](https://tachyons.io/)
 - [CSS HoneyComb Patter](https://projects.verou.me/css3patterns/)
 - [CSS Preloader](https://projects.lukehaas.me/css-loaders/)
+- [Hamburger](https://github.com/jonsuh/hamburgers)
 - [HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
 
 ### Misc
