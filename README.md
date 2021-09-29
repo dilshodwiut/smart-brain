@@ -9,6 +9,7 @@ Modern web application to detect faces interactively on online images which util
 - Guest mode
 - Keep the user logged in for an hour
 - Protected pages
+- Fully responsive
 
 ## How to run locally
 
