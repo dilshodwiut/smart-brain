@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, Suspense } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
@@ -6,7 +6,7 @@ import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
 import Signin from "./routes/Signin/Signin";
 import Register from "./routes/Register/Register";
-import Rankings from "./routes/Rankings/Rankings";
+// import Rankings from "./routes/Rankings/Rankings";
 import Profile from "./routes/Profile/Profile";
 import Home from "./routes/Home/Home";
 import Welcome from "./routes/Welcome/Welcome";
@@ -14,6 +14,8 @@ import classes from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
 import FourOFour from "./routes/404/FourOFour";
 import Snackbar from "./components/UI/Snackbar/Snackbar";
+import Backdrop from "./components/UI/Backdrop/Backdrop";
+import Preloader from "./components/UI/Preloader/Preloader";
 
 // we need to map the `scale` prop we define below
 // to the transform style property
@@ -66,6 +68,8 @@ export default function App() {
     setState(true);
   }, 5000);
 
+  const Rankings = React.lazy(() => import("./routes/Rankings/Rankings"));
+
   return (
     <Layout>
       <Navigation />
@@ -73,47 +77,55 @@ export default function App() {
       <Snackbar style={state ? animationStyles : null}>
         The app is still in development! Please excuse that!
       </Snackbar>
-      <AnimatedSwitch
-        atEnter={bounceTransition.atEnter}
-        atLeave={bounceTransition.atLeave}
-        atActive={bounceTransition.atActive}
-        mapStyles={mapStyles}
-        className={classes["route-wrapper"]}
+      <Suspense
+        fallback={
+          <Backdrop coversFull>
+            <Preloader />
+          </Backdrop>
+        }
       >
-        {/* React.Fragment doesn't work to wrap routes */}
-        {!authContext.isAuth && [
-          <Route
-            path="/signin"
-            key="/signin"
-            render={(props) => <Signin title="Sign in" />}
-          />,
-          <Route
-            path="/register"
-            key="/register"
-            render={(props) => <Register title="Register" />}
-          />,
-        ]}
-        {authContext.isAuth && (
-          <Route path="/profile">
-            <Profile title="Profile" />
-          </Route>
-        )}
-        <Route path="/rankings">
-          <Rankings title="Rankings" />
-        </Route>
-        <Route path="/home" component={Home} />
-        <Route path="/" exact>
-          {authContext.isAuth ? (
-            <Redirect to="/home" />
-          ) : (
-            <Welcome title="Welcome" />
+        <AnimatedSwitch
+          atEnter={bounceTransition.atEnter}
+          atLeave={bounceTransition.atLeave}
+          atActive={bounceTransition.atActive}
+          mapStyles={mapStyles}
+          className={classes["route-wrapper"]}
+        >
+          {/* React.Fragment doesn't work to wrap routes */}
+          {!authContext.isAuth && [
+            <Route
+              path="/signin"
+              key="/signin"
+              render={(props) => <Signin title="Sign in" />}
+            />,
+            <Route
+              path="/register"
+              key="/register"
+              render={(props) => <Register title="Register" />}
+            />,
+          ]}
+          {authContext.isAuth && (
+            <Route path="/profile">
+              <Profile title="Profile" />
+            </Route>
           )}
-        </Route>
-        <Route path="*">
-          {/* 404 page */}
-          <FourOFour title="Page not found" />
-        </Route>
-      </AnimatedSwitch>
+          <Route path="/rankings">
+            <Rankings title="Rankings" />
+          </Route>
+          <Route path="/home" component={Home} />
+          <Route path="/" exact>
+            {authContext.isAuth ? (
+              <Redirect to="/home" />
+            ) : (
+              <Welcome title="Welcome" />
+            )}
+          </Route>
+          <Route path="*">
+            {/* 404 page */}
+            <FourOFour title="Page not found" />
+          </Route>
+        </AnimatedSwitch>
+      </Suspense>
     </Layout>
   );
 }
