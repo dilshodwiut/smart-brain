@@ -2,6 +2,7 @@ import React, { useState, useContext, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 import classes from "./Navigation.module.css";
+import hamClasses from "../UI/Hamburger/Hamburger.module.css";
 import Hamburger from "../UI/Hamburger/Hamburger";
 import Backdrop from "../UI/Backdrop/Backdrop";
 
@@ -53,26 +54,50 @@ function Navigation() {
             <nav className={`${classes.MobileNavbar} pa2`}>
               <NavLink
                 to="/home"
+                onClick={() => {
+                  setHamIsActive(false);
+                  document
+                    .getElementById("hamburger")
+                    .classList.toggle(hamClasses["is-active"]);
+                }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
                 Home
               </NavLink>
               <NavLink
                 to="/rankings"
+                onClick={() => {
+                  setHamIsActive(false);
+                  document
+                    .getElementById("hamburger")
+                    .classList.toggle(hamClasses["is-active"]);
+                }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
                 Rankings
               </NavLink>
               <NavLink
                 to="/profile"
-                className="f3 link dim white underline pa2 pa3-l poiner"
+                onClick={() => {
+                  setHamIsActive(false);
+                  document
+                    .getElementById("hamburger")
+                    .classList.toggle(hamClasses["is-active"]);
+                }}
+                className="f3 link dim white underline pa2 pa3-l pointer"
               >
                 Profile
               </NavLink>
               <NavLink
                 to="/"
+                onClick={() => {
+                  setHamIsActive(false);
+                  document
+                    .getElementById("hamburger")
+                    .classList.toggle(hamClasses["is-active"]);
+                  signoutHandler();
+                }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
-                onClick={signoutHandler}
               >
                 Sign Out
               </NavLink>
@@ -116,24 +141,48 @@ function Navigation() {
             <nav className={classes.MobileNavbar.concat(" pa2")}>
               <NavLink
                 to="/home"
+                onClick={() => {
+                  setHamIsActive(false);
+                  document
+                    .getElementById("hamburger")
+                    .classList.toggle(hamClasses["is-active"]);
+                }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
                 Home
               </NavLink>
               <NavLink
                 to="/rankings"
+                onClick={() => {
+                  setHamIsActive(false);
+                  document
+                    .getElementById("hamburger")
+                    .classList.toggle(hamClasses["is-active"]);
+                }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
                 Rankings
               </NavLink>
               <NavLink
                 to="/signin"
+                onClick={() => {
+                  setHamIsActive(false);
+                  document
+                    .getElementById("hamburger")
+                    .classList.toggle(hamClasses["is-active"]);
+                }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
                 Sign in
               </NavLink>
               <NavLink
                 to="/register"
+                onClick={() => {
+                  setHamIsActive(false);
+                  document
+                    .getElementById("hamburger")
+                    .classList.toggle(hamClasses["is-active"]);
+                }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
                 Register
