@@ -4,17 +4,12 @@ import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
 import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
-import Signin from "./routes/Signin/Signin";
-import Register from "./routes/Register/Register";
-// import Rankings from "./routes/Rankings/Rankings";
-import Profile from "./routes/Profile/Profile";
 import Home from "./routes/Home/Home";
 import Welcome from "./routes/Welcome/Welcome";
 import classes from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
 import FourOFour from "./routes/404/FourOFour";
 import Snackbar from "./components/UI/Snackbar/Snackbar";
-import Backdrop from "./components/UI/Backdrop/Backdrop";
 import Preloader from "./components/UI/Preloader/Preloader";
 
 // we need to map the `scale` prop we define below
@@ -63,27 +58,24 @@ export default function App() {
     animation: "slideout 1.2s 1",
   };
 
-  const [state, setState] = useState(false);
+  const [snackbarIsShown, setSnackbarIsShown] = useState(false);
   setTimeout(() => {
-    setState(true);
+    setSnackbarIsShown(true);
   }, 5000);
 
   const Rankings = React.lazy(() => import("./routes/Rankings/Rankings"));
+  const Register = React.lazy(() => import("./routes/Register/Register"));
+  const Signin = React.lazy(() => import("./routes/Signin/Signin"));
+  const Profile = React.lazy(() => import("./routes/Profile/Profile"));
 
   return (
     <Layout>
       <Navigation />
       <Logo />
-      <Snackbar style={state ? animationStyles : null}>
+      <Snackbar style={snackbarIsShown ? animationStyles : null}>
         The app is still in development! Please excuse that!
       </Snackbar>
-      <Suspense
-        fallback={
-          <Backdrop coversFull>
-            <Preloader />
-          </Backdrop>
-        }
-      >
+      <Suspense fallback={<Preloader />}>
         <AnimatedSwitch
           atEnter={bounceTransition.atEnter}
           atLeave={bounceTransition.atLeave}

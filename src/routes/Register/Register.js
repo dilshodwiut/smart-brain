@@ -15,6 +15,14 @@ function Register(props) {
 
   useEffect(() => {
     document.title = props.title || "Smart Brain";
+
+    fetch(
+      "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/usernames.json"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setUsernames(Object.keys(data));
+      });
   }, [props.title]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -30,16 +38,6 @@ function Register(props) {
   const nameChangeHandler = (e) => {
     setName(e.target.value);
   };
-
-  useEffect(() => {
-    fetch(
-      "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/usernames.json"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setUsernames(Object.keys(data));
-      });
-  }, []);
 
   const submitHandler = useCallback(
     (e) => {
