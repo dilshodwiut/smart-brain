@@ -1,4 +1,4 @@
-import React, { useContext, useState, Suspense } from "react";
+import React, { useContext, useState, useEffect, Suspense } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
@@ -48,7 +48,7 @@ const bounceTransition = {
   },
 };
 
-export default function App() {
+function App() {
   console.log("[App] rendered");
 
   const authContext = useContext(AuthContext);
@@ -59,9 +59,14 @@ export default function App() {
   };
 
   const [snackbarIsShown, setSnackbarIsShown] = useState(true);
-  setTimeout(() => {
-    setSnackbarIsShown(false);
-  }, 5000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSnackbarIsShown(false);
+    }, 5000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   const Rankings = React.lazy(() => import("./routes/Rankings/Rankings"));
   const Register = React.lazy(() => import("./routes/Register/Register"));
@@ -121,3 +126,5 @@ export default function App() {
     </Layout>
   );
 }
+
+export default React.memo(App);

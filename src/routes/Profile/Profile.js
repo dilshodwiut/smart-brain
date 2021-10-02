@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 
 export default function Profile(props) {
+  console.log("[Profile] rendered");
   useEffect(() => {
     document.title = props.title || "Smart Brain";
   }, [props.title]);

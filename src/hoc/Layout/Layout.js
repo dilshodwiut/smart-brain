@@ -1,3 +1,4 @@
+import React from "react";
 import ParticlesBg from "particles-bg";
 
 function Layout(props) {
@@ -10,4 +11,4 @@ function Layout(props) {
   );
 }
 
-export default Layout;
+export default React.memo(Layout);

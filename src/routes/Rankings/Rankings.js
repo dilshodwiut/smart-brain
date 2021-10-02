@@ -7,15 +7,12 @@ import numberGenerator from "../../helpers/numberGenerator";
 export default function Rankings(props) {
   console.log("[Rankings rendered]");
 
-  useEffect(() => {
-    document.title = props.title || "Smart Brain";
-  }, [props.title]);
-
   const [fetchedUsers, setFetchedUsers] = useState([]);
 
   const generatorObj = numberGenerator();
 
   useEffect(() => {
+    document.title = props.title || "Smart Brain";
     let arrOfUsers = [];
     fetch(
       "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
@@ -37,7 +34,7 @@ export default function Rankings(props) {
     return () => {
       arrOfUsers = [];
     };
-  }, []);
+  }, [props.title]);
 
   return (
     <section className="pa4">

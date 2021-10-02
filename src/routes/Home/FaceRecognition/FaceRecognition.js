@@ -1,3 +1,4 @@
+import React from "react";
 import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import Preloader from "../../../components/UI/Preloader/Preloader";
 
@@ -46,4 +47,4 @@ function FaceRecognition({ imageUrl, boxes, isLoading }) {
   );
 }
 
-export default FaceRecognition;
+export default React.memo(FaceRecognition);

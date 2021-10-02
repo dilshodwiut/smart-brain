@@ -1,14 +1,11 @@
-import { useState, useCallback, useEffect, useContext } from "react";
+import React, { useState, useCallback, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/auth-context";
 import Clarifai from "clarifai";
 import Points from "./Points/Points";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./FaceRecognition/FaceRecognition";
 import calculateFaceLocation from "../../helpers/calculateFaceLocation";
-
-const app = new Clarifai.App({
-  apiKey: "da83cb85013349cd9208ff3964b606f5",
-});
+import { app } from "../../index";
 
 function Home(props) {
   console.log("[Home] rendered");
@@ -23,13 +20,10 @@ function Home(props) {
     ) {
       setCounter(authContext.credentials.points);
     }
-  }, [authContext.credentials, authContext.isAuth]);
+    document.title = props.title || "Smart Brain";
+  }, [authContext.credentials, authContext.isAuth, props.title]);
 
   const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    document.title = props.title || "Smart Brain";
-  }, [props.title]);
 
   const [userInput, setUserInput] = useState("");
   const [insetBoxes, setInsetBoxes] = useState([]);
@@ -83,7 +77,7 @@ function Home(props) {
 
   return (
     <>
-      <Points points={counter} />
+      <Points />
       <ImageLinkForm
         userInput={userInput}
         onInputChange={inputChangeHandler}
@@ -100,4 +94,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default React.memo(Home);

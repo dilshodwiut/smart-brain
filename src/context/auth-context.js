@@ -92,7 +92,6 @@ const AuthContextProvider = (props) => {
     }
     return () => {
       clearTimeout(logoutTimer);
-      console.log("logutTimer cleared");
     };
   }, [storedData, logoutHandler]);
 

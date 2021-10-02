@@ -1,4 +1,10 @@
-import { useState, useRef, useContext, useCallback, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useCallback,
+  useEffect,
+} from "react";
 import { AuthContext } from "../../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 import Button from "../../components/UI/Button/Button";
@@ -203,4 +209,4 @@ function Register(props) {
   );
 }
 
-export default Register;
+export default React.memo(Register);

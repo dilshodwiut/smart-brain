@@ -1,4 +1,4 @@
-import { useState, useContext, useCallback } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 import styles from "./Navigation.module.css";
@@ -199,4 +199,4 @@ function Navigation() {
   }
 }
 
-export default Navigation;
+export default React.memo(Navigation);
