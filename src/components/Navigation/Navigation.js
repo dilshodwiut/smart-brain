@@ -2,8 +2,8 @@ import React, { useState, useContext, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
 import styles from "./Navigation.module.css";
-import hamStyles from "../UI/Hamburger/Hamburger.module.css";
-import Hamburger from "../UI/Hamburger/Hamburger";
+import hamStyles from "./Hamburger/Hamburger.module.css";
+import Hamburger from "./Hamburger/Hamburger";
 import Backdrop from "../UI/Backdrop/Backdrop";
 
 function Navigation() {

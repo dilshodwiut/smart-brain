@@ -68,7 +68,7 @@ export default function Rankings(props) {
                 <tr className="stripe-dark" key={user.id}>
                   <th className="pa3 tl">{generatorObj.next().value}</th>
                   <td className="pa3">@{user.username}</td>
-                  <td className={"pa3 ".concat(styles.EmailCol)}>
+                  <td className={"pa3 ".concat(styles.emailCol)}>
                     {user.email}
                   </td>
                   <td className="pa3">{user.points}</td>
