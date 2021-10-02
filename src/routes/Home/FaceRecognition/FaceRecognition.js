@@ -1,5 +1,3 @@
-import React from "react";
-import classes from "./FaceRecognition.module.css";
 import Backdrop from "../../../components/UI/Backdrop/Backdrop";
 import Preloader from "../../../components/UI/Preloader/Preloader";
 
@@ -31,12 +29,12 @@ function FaceRecognition({ imageUrl, boxes, isLoading }) {
   }
 
   return (
-    <div className={"center shadow-5 ".concat(classes.FaceRecognition)}>
+    <div className="center shadow-5 relative mv3 w-70 mw6">
       <img
-        className={classes.Image}
+        className="w-100 h-auto"
         id="inputImage"
         src={imageUrl}
-        alt="Error"
+        alt="Error. Could't get the img from link"
       />
       {isLoading ? (
         <Backdrop>

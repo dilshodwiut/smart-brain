@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Backdrop from "../../components/UI/Backdrop/Backdrop";
 import Preloader from "../../components/UI/Preloader/Preloader";
-import classes from "./Rankings.module.css";
+import styles from "./Rankings.module.css";
+import numberGenerator from "../../helpers/numberGenerator";
 
 export default function Rankings(props) {
   console.log("[Rankings rendered]");
@@ -11,14 +12,6 @@ export default function Rankings(props) {
   }, [props.title]);
 
   const [fetchedUsers, setFetchedUsers] = useState([]);
-
-  function* numberGenerator() {
-    let num = 1;
-    while (true) {
-      yield num;
-      num++;
-    }
-  }
 
   const generatorObj = numberGenerator();
 
@@ -42,23 +35,19 @@ export default function Rankings(props) {
         setFetchedUsers(arrOfUsers);
       });
     return () => {
-      // that doesn't work for some reason
-      // for (let i = 0; i < arrOfUsers.length; i++ ) {
-      //   arrOfUsers.pop()
-      // };
       arrOfUsers = [];
     };
   }, []);
 
   return (
-    <div className="pa4">
-      <div className="overflow-hidden">
+    <section className="pa4">
+      <main className="overflow-hidden">
         <table className="w-100 mw8 center" cellSpacing="0">
           <thead>
             <tr className="stripe-dark">
               <th className="fw6 tl pa3 bg-white">Top</th>
               <th className="fw6 tl pa3 bg-white">Username</th>
-              <th className={"fw6 tl pa3 bg-white ".concat(classes.EmailCol)}>
+              <th className={"fw6 tl pa3 bg-white ".concat(styles.emailCol)}>
                 Email
               </th>
               <th className="fw6 tl pa3 bg-white">Points</th>
@@ -82,7 +71,7 @@ export default function Rankings(props) {
                 <tr className="stripe-dark" key={user.id}>
                   <th className="pa3 tl">{generatorObj.next().value}</th>
                   <td className="pa3">@{user.username}</td>
-                  <td className={"pa3 ".concat(classes.EmailCol)}>
+                  <td className={"pa3 ".concat(styles.EmailCol)}>
                     {user.email}
                   </td>
                   <td className="pa3">{user.points}</td>
@@ -90,7 +79,7 @@ export default function Rankings(props) {
               ))}
           </tbody>
         </table>
-      </div>
-    </div>
+      </main>
+    </section>
   );
 }

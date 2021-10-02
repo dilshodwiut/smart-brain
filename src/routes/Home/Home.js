@@ -1,9 +1,10 @@
-import React, { useState, useCallback, useEffect, useContext } from "react";
+import { useState, useCallback, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/auth-context";
 import Clarifai from "clarifai";
 import Points from "./Points/Points";
 import ImageLinkForm from "./ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./FaceRecognition/FaceRecognition";
+import calculateFaceLocation from "../../helpers/calculateFaceLocation";
 
 const app = new Clarifai.App({
   apiKey: "da83cb85013349cd9208ff3964b606f5",
@@ -40,30 +41,11 @@ function Home(props) {
     setIsLoading(false);
   }, []);
 
-  const calculateFaceLocation = useCallback(function (regions) {
-    const boundingBoxes = regions.map((region) => {
-      return region.region_info.bounding_box;
-    });
-    const image = document.getElementById("inputImage");
-    const width = ++image.width;
-    const height = ++image.height;
-    const insetBoxes = boundingBoxes.map((boundingBox) => {
-      return {
-        leftCol: boundingBox.left_col * width,
-        topRow: boundingBox.top_row * height,
-        rightCol: width - boundingBox.right_col * width,
-        bottomRow: height - boundingBox.bottom_row * height,
-      };
-    });
-    return insetBoxes;
-  }, []);
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  // }, []);
-
   const submitHandler = useCallback(
     function () {
+      if (userInput.trim() === "") {
+        return;
+      }
       if (!insetBoxes.length) {
         setIsLoading(true);
         app.models
@@ -96,7 +78,7 @@ function Home(props) {
           });
       }
     },
-    [userInput, calculateFaceLocation, counter, insetBoxes.length, authContext]
+    [userInput, counter, insetBoxes.length, authContext]
   );
 
   return (

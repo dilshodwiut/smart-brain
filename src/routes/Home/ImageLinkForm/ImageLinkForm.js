@@ -1,5 +1,6 @@
 import React from "react";
-import classes from "./ImageLinkForm.module.css";
+import styles from "./ImageLinkForm.module.css";
+import Button from "../../../components/UI/Button/Button";
 
 function ImageLinkForm({ userInput, onInputChange, onSubmit }) {
   console.log("[ImageLinkForm] rendered");
@@ -9,27 +10,27 @@ function ImageLinkForm({ userInput, onInputChange, onSubmit }) {
       <p className="f3 tc mb3-l mb0-ns mb2-m pa4-m pa2">
         {"This Magic Brain will detect faces in your pictures. Give it a try."}
       </p>
-      <div className="center">
+      <section className="center">
         <div
-          className={"pa4-l pa4-m pa3 br3 shadow-5 center ".concat(
-            classes.Form
+          className={"pa4-l pa4-m pa3 br3 shadow-5 center w-90 mw7 ".concat(
+            styles.form
           )}
         >
           <input
-            className={"f4 pa2 w-70 center input-reset ".concat(classes.Input)}
+            className="f4 pa2 w-70 center input-reset bn"
             type="text"
             placeholder="URL of an image..."
             value={userInput}
             onChange={onInputChange}
           />
-          <button
+          <Button
             className="w-30 grow f4 link ph3 pv2 dib white bg-light-purple"
             onClick={onSubmit}
           >
             Detect
-          </button>
+          </Button>
         </div>
-      </div>
+      </section>
     </>
   );
 }

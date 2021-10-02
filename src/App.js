@@ -6,7 +6,7 @@ import Navigation from "./components/Navigation/Navigation";
 import Logo from "./components/Logo/Logo";
 import Home from "./routes/Home/Home";
 import Welcome from "./routes/Welcome/Welcome";
-import classes from "./App.module.css";
+import styles from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
 import FourOFour from "./routes/404/FourOFour";
 import Snackbar from "./components/UI/Snackbar/Snackbar";
@@ -58,9 +58,9 @@ export default function App() {
     animation: "slideout 1.2s 1",
   };
 
-  const [snackbarIsShown, setSnackbarIsShown] = useState(false);
+  const [snackbarIsShown, setSnackbarIsShown] = useState(true);
   setTimeout(() => {
-    setSnackbarIsShown(true);
+    setSnackbarIsShown(false);
   }, 5000);
 
   const Rankings = React.lazy(() => import("./routes/Rankings/Rankings"));
@@ -72,7 +72,7 @@ export default function App() {
     <Layout>
       <Navigation />
       <Logo />
-      <Snackbar style={snackbarIsShown ? animationStyles : null}>
+      <Snackbar style={!snackbarIsShown ? animationStyles : null}>
         The app is still in development! Please excuse that!
       </Snackbar>
       <Suspense fallback={<Preloader />}>
@@ -81,7 +81,7 @@ export default function App() {
           atLeave={bounceTransition.atLeave}
           atActive={bounceTransition.atActive}
           mapStyles={mapStyles}
-          className={classes["route-wrapper"]}
+          className={styles["route-wrapper"]}
         >
           {/* React.Fragment doesn't work to wrap routes */}
           {!authContext.isAuth && [

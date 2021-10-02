@@ -1,4 +1,4 @@
-.Msg {
+.msg {
   color: white;
   position: absolute;
   top: 70%;
@@ -8,7 +8,7 @@
   z-index: 11;
 }
 
-.Preloader {
+.preloader {
   color: #ffffff;
   font-size: 90px;
   text-indent: -9999em;

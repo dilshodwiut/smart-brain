@@ -1,19 +1,14 @@
-.Navbar {
+.navbar {
   display: flex;
   justify-content: flex-end;
 }
 
-.MobileNavbar {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
+.mobileNavbar {
   z-index: 50;
-  height: 100%;
 }
 
 @media screen and (max-width: 468px) {
-  .Navbar {
+  .navbar {
     display: none;
   }
 }

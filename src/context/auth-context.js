@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-
-let logoutTimer;
+import calculateRemainingTime from "../helpers/calculateRemainingTime";
+import retrieveStoredData from "../helpers/retrieveStoredData";
 
 export const AuthContext = React.createContext({
   credentials: {
@@ -15,39 +15,7 @@ export const AuthContext = React.createContext({
   logout: () => {},
 });
 
-// helper functions
-const calculateRemainingTime = (expirationTime) => {
-  const currentTime = new Date().getTime();
-  const adjExpirationTime = new Date(expirationTime).getTime();
-
-  const remainingDuration = adjExpirationTime - currentTime;
-
-  return remainingDuration;
-};
-
-const retrieveStoredData = () => {
-  const storedToken = localStorage.getItem("token");
-  const storedExpirationDate = localStorage.getItem("expiresAt");
-  const storedUid = localStorage.getItem("uid");
-  const storedCredentials = JSON.parse(localStorage.getItem("credentials"));
-
-  const remainingTime = calculateRemainingTime(storedExpirationDate);
-
-  if (remainingTime <= 60000) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("expiresAt");
-    localStorage.removeItem("uid");
-    localStorage.removeItem("credentials");
-    return null;
-  }
-
-  return {
-    token: storedToken,
-    duration: remainingTime,
-    uid: storedUid,
-    credentials: storedCredentials,
-  };
-};
+let logoutTimer;
 
 const AuthContextProvider = (props) => {
   const storedData = retrieveStoredData();
@@ -122,6 +90,10 @@ const AuthContextProvider = (props) => {
     if (storedData) {
       logoutTimer = setTimeout(logoutHandler, storedData.duration);
     }
+    return () => {
+      clearTimeout(logoutTimer);
+      console.log("logutTimer cleared");
+    };
   }, [storedData, logoutHandler]);
 
   return (

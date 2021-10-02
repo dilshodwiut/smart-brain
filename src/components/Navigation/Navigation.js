@@ -1,8 +1,8 @@
-import React, { useState, useContext, useCallback } from "react";
+import { useState, useContext, useCallback } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../context/auth-context";
-import classes from "./Navigation.module.css";
-import hamClasses from "../UI/Hamburger/Hamburger.module.css";
+import styles from "./Navigation.module.css";
+import hamStyles from "../UI/Hamburger/Hamburger.module.css";
 import Hamburger from "../UI/Hamburger/Hamburger";
 import Backdrop from "../UI/Backdrop/Backdrop";
 
@@ -22,7 +22,7 @@ function Navigation() {
     return (
       <>
         <Hamburger onActive={setHamIsActive} />
-        <nav className={`${classes.Navbar} pa2`}>
+        <nav className={`${styles.navbar} pa2`}>
           <NavLink
             to="/home"
             className="f3 link dim black underline pa2 pa3-l pointer"
@@ -51,14 +51,16 @@ function Navigation() {
         </nav>
         {hamIsActive && (
           <Backdrop coversFull>
-            <nav className={`${classes.MobileNavbar} pa2`}>
+            <nav
+              className={`${styles.mobileNavbar} flex justify-center items-center flex-column flex-nowrap h-100 pa2`}
+            >
               <NavLink
                 to="/home"
                 onClick={() => {
                   setHamIsActive(false);
                   document
                     .getElementById("hamburger")
-                    .classList.toggle(hamClasses["is-active"]);
+                    .classList.toggle(hamStyles["is-active"]);
                 }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
@@ -70,7 +72,7 @@ function Navigation() {
                   setHamIsActive(false);
                   document
                     .getElementById("hamburger")
-                    .classList.toggle(hamClasses["is-active"]);
+                    .classList.toggle(hamStyles["is-active"]);
                 }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
@@ -82,7 +84,7 @@ function Navigation() {
                   setHamIsActive(false);
                   document
                     .getElementById("hamburger")
-                    .classList.toggle(hamClasses["is-active"]);
+                    .classList.toggle(hamStyles["is-active"]);
                 }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
@@ -94,7 +96,7 @@ function Navigation() {
                   setHamIsActive(false);
                   document
                     .getElementById("hamburger")
-                    .classList.toggle(hamClasses["is-active"]);
+                    .classList.toggle(hamStyles["is-active"]);
                   signoutHandler();
                 }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
@@ -110,7 +112,7 @@ function Navigation() {
     return (
       <>
         <Hamburger onActive={setHamIsActive} />
-        <nav className={classes.Navbar.concat(" pa2")}>
+        <nav className={`${styles.navbar} pa2`}>
           <NavLink
             to="/home"
             className="f3 link dim black underline pa2 pa3-l pointer"
@@ -138,14 +140,16 @@ function Navigation() {
         </nav>
         {hamIsActive && (
           <Backdrop coversFull>
-            <nav className={classes.MobileNavbar.concat(" pa2")}>
+            <nav
+              className={`${styles.mobileNavbar} flex justify-center items-center flex-column flex-nowrap h-100 pa2`}
+            >
               <NavLink
                 to="/home"
                 onClick={() => {
                   setHamIsActive(false);
                   document
                     .getElementById("hamburger")
-                    .classList.toggle(hamClasses["is-active"]);
+                    .classList.toggle(hamStyles["is-active"]);
                 }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
@@ -157,7 +161,7 @@ function Navigation() {
                   setHamIsActive(false);
                   document
                     .getElementById("hamburger")
-                    .classList.toggle(hamClasses["is-active"]);
+                    .classList.toggle(hamStyles["is-active"]);
                 }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
@@ -169,7 +173,7 @@ function Navigation() {
                   setHamIsActive(false);
                   document
                     .getElementById("hamburger")
-                    .classList.toggle(hamClasses["is-active"]);
+                    .classList.toggle(hamStyles["is-active"]);
                 }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >
@@ -181,7 +185,7 @@ function Navigation() {
                   setHamIsActive(false);
                   document
                     .getElementById("hamburger")
-                    .classList.toggle(hamClasses["is-active"]);
+                    .classList.toggle(hamStyles["is-active"]);
                 }}
                 className="f3 link dim white underline pa2 pa3-l pointer"
               >

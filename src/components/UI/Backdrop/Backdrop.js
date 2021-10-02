@@ -1,12 +1,14 @@
-import classes from "./Backdrop.module.css";
+import styles from "./Backdrop.module.css";
 
 export default function Backdrop(props) {
-  const styles = { position: "fixed", height: "100vh" };
+  const coversFullStyles = { position: "fixed", height: "100vh" };
   return (
     <div
-      className={classes.Backdrop}
+      className={styles.backdrop.concat(
+        " absolute top-0 left-0 w-100 h-100 bg-black o-80"
+      )}
       onClick={props.onConfirm}
-      style={props.coversFull ? styles : null}
+      style={props.coversFull ? coversFullStyles : null}
     >
       {props.children}
     </div>

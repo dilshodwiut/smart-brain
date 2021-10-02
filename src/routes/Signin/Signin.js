@@ -1,12 +1,7 @@
-import React, {
-  useState,
-  useRef,
-  useContext,
-  useCallback,
-  useEffect,
-} from "react";
+import { useState, useRef, useContext, useCallback, useEffect } from "react";
 import { AuthContext } from "../../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
+import Button from "../../components/UI/Button/Button";
 
 function Signin(props) {
   console.log("[Signin] rendered");
@@ -124,11 +119,12 @@ function Signin(props) {
           </fieldset>
           <div className="tc">
             {!isLoading && (
-              <input
+              <Button
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"
-                value="Sign in"
-              />
+              >
+                Sign in
+              </Button>
             )}
             {isLoading && <p>Sending request...</p>}
           </div>

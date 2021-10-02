@@ -1,11 +1,10 @@
-import classes from "./Button.module.css";
-
 export default function Button(props) {
   return (
     <button
-      className={classes.Button}
+      className={props.className}
       type={props.type || "button"}
       onClick={props.onClick}
+      {...props}
     >
       {props.children}
     </button>

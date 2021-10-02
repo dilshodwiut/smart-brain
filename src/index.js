@@ -19,7 +19,7 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
-VanillaTilt.init(document.querySelector(".Tilt"), {
+VanillaTilt.init(document.querySelector(".tilt"), {
   max: 30,
   scale: 1.1,
   glare: true,

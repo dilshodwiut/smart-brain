@@ -1,30 +1,12 @@
-.Modal {
-  position: fixed;
+.modal {
   top: 30vh;
   left: 25%;
   width: 50%;
   z-index: 100;
-  overflow: hidden;
 }
 
-.Header {
+.header {
   background: #ff5edf;
-  padding: 1rem;
-}
-
-.Header h2 {
-  margin: 0;
-  color: white;
-}
-
-.Content {
-  padding: 1rem;
-}
-
-.Actions {
-  padding: 1rem;
-  display: flex;
-  justify-content: flex-end;
 }
 
 @media (min-width: 768px) {

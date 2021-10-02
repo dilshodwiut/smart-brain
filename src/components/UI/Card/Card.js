@@ -1,7 +1,7 @@
-import classes from "./Card.module.css";
-
 export default function Card(props) {
   return (
-    <div className={`${classes.Card} ${props.className}`}>{props.children}</div>
+    <div className={`${props.className} bg-white br-3 shadow-3`}>
+      {props.children}
+    </div>
   );
 }
