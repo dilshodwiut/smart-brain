@@ -37,7 +37,7 @@ function Home(props) {
 
   const submitHandler = useCallback(
     function () {
-      if (userInput.trim() === "") {
+      if (userInput.trim() === "" || !userInput.includes("http")) {
         return;
       }
       if (!insetBoxes.length) {

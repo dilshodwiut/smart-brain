@@ -8,21 +8,27 @@ function Rankings(props) {
   console.log("[Rankings rendered]");
 
   const [fetchedUsers, setFetchedUsers] = useState([]);
+  const [error, setError] = useState(null);
 
   const generatorObj = numberGenerator();
 
   const fetchTopUsers = useCallback(async function (url) {
     let arrOfUsers = [];
-    const response = await fetch(url);
-    const data = await response.json();
-    for (const user in data) {
-      arrOfUsers.push({
-        id: user,
-        username: data[user].username,
-        email: data[user].email,
-        points: data[user].points,
-      });
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+      for (const user in data) {
+        arrOfUsers.push({
+          id: user,
+          username: data[user].username,
+          email: data[user].email,
+          points: data[user].points,
+        });
+      }
+    } catch (error) {
+      setError(true);
     }
+
     arrOfUsers.sort((a, b) => b.points - a.points);
     arrOfUsers = arrOfUsers.filter((user, index) => index < 10);
     setFetchedUsers(arrOfUsers);
@@ -51,7 +57,7 @@ function Rankings(props) {
             </tr>
           </thead>
           <tbody className="lh-copy">
-            {!fetchedUsers.length && (
+            {!fetchedUsers.length && !error ? (
               <tr>
                 <th
                   style={{ position: "relative", height: "560px" }}
@@ -62,7 +68,21 @@ function Rankings(props) {
                   </Backdrop>
                 </th>
               </tr>
-            )}
+            ) : null}
+            {!fetchedUsers.length && error ? (
+              <tr>
+                <th
+                  style={{ position: "relative", height: "560px" }}
+                  colSpan="4"
+                >
+                  <Backdrop className="flex items-center justify-center">
+                    <h1 className="white">
+                      Network Error occurred, please, try again later!
+                    </h1>
+                  </Backdrop>
+                </th>
+              </tr>
+            ) : null}
             {fetchedUsers.length
               ? fetchedUsers.map((user) => (
                   <tr className="stripe-dark" key={user.id}>

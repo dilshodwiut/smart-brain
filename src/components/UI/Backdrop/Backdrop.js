@@ -5,7 +5,7 @@ export default function Backdrop(props) {
   return (
     <div
       className={styles.backdrop.concat(
-        " absolute top-0 left-0 w-100 h-100 bg-black o-80"
+        ` absolute top-0 left-0 w-100 h-100 bg-black o-80 ${props.className}`
       )}
       onClick={props.onConfirm}
       style={props.coversFull ? coversFullStyles : null}
