@@ -1,40 +1,40 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Backdrop from "../../components/UI/Backdrop/Backdrop";
 import Preloader from "../../components/UI/Preloader/Preloader";
 import styles from "./Rankings.module.css";
 import numberGenerator from "../../helpers/numberGenerator";
 
-export default function Rankings(props) {
+function Rankings(props) {
   console.log("[Rankings rendered]");
 
   const [fetchedUsers, setFetchedUsers] = useState([]);
 
   const generatorObj = numberGenerator();
 
+  const fetchTopUsers = useCallback(async function (url) {
+    let arrOfUsers = [];
+    const response = await fetch(url);
+    const data = await response.json();
+    for (const user in data) {
+      arrOfUsers.push({
+        id: user,
+        username: data[user].username,
+        email: data[user].email,
+        points: data[user].points,
+      });
+    }
+    arrOfUsers.sort((a, b) => b.points - a.points);
+    arrOfUsers = arrOfUsers.filter((user, index) => index < 10);
+    setFetchedUsers(arrOfUsers);
+  }, []);
+
   useEffect(() => {
     document.title = props.title || "Smart Brain";
-    let arrOfUsers = [];
-    fetch(
+
+    fetchTopUsers(
       "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        for (const user in data) {
-          arrOfUsers.push({
-            id: user,
-            username: data[user].username,
-            email: data[user].email,
-            points: data[user].points,
-          });
-        }
-        arrOfUsers.sort((a, b) => b.points - a.points);
-        arrOfUsers = arrOfUsers.filter((user, index) => index < 10);
-        setFetchedUsers(arrOfUsers);
-      });
-    return () => {
-      arrOfUsers = [];
-    };
-  }, [props.title]);
+    );
+  }, [props.title, fetchTopUsers]);
 
   return (
     <section className="pa4">
@@ -63,20 +63,23 @@ export default function Rankings(props) {
                 </th>
               </tr>
             )}
-            {fetchedUsers &&
-              fetchedUsers.map((user) => (
-                <tr className="stripe-dark" key={user.id}>
-                  <th className="pa3 tl">{generatorObj.next().value}</th>
-                  <td className="pa3">@{user.username}</td>
-                  <td className={"pa3 ".concat(styles.emailCol)}>
-                    {user.email}
-                  </td>
-                  <td className="pa3">{user.points}</td>
-                </tr>
-              ))}
+            {fetchedUsers.length
+              ? fetchedUsers.map((user) => (
+                  <tr className="stripe-dark" key={user.id}>
+                    <th className="pa3 tl">{generatorObj.next().value}</th>
+                    <td className="pa3">@{user.username}</td>
+                    <td className={"pa3 ".concat(styles.emailCol)}>
+                      {user.email}
+                    </td>
+                    <td className="pa3">{user.points}</td>
+                  </tr>
+                ))
+              : null}
           </tbody>
         </table>
       </main>
     </section>
   );
 }
+
+export default React.memo(Rankings);

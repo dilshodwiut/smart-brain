@@ -1,6 +1,7 @@
+import React from "react";
 import styles from "./Snackbar.module.css";
 
-export default function Snackbar(props) {
+function Snackbar(props) {
   return (
     <div
       className={`${styles.snackbar} fixed white tc shadow-3 right-0 br2 br--bottom pa3`}
@@ -10,3 +11,5 @@ export default function Snackbar(props) {
     </div>
   );
 }
+
+export default React.memo(Snackbar);
