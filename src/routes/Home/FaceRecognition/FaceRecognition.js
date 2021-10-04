@@ -39,7 +39,7 @@ function FaceRecognition({ imageUrl, boxes, isLoading }) {
       />
       {isLoading ? (
         <Backdrop>
-          <Preloader></Preloader>
+          <Preloader />
         </Backdrop>
       ) : null}
       {insetBoxes === [] ? null : insetBoxes}
