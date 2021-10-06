@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useContext,
-  useCallback,
-  useEffect,
-} from "react";
+import React, { useState, useContext, useCallback, useEffect } from "react";
 import { AuthContext } from "../../context/auth-context";
 import { Link, useHistory } from "react-router-dom";
 import Button from "../../components/UI/Button/Button";
@@ -13,6 +7,16 @@ function Register(props) {
   console.log("[Register] rendered");
 
   const authContext = useContext(AuthContext);
+
+  const [usernames, setUsernames] = useState(null);
+  const [emails, setEmails] = useState(undefined);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState({});
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     document.title = props.title || "Smart Brain";
@@ -24,33 +28,79 @@ function Register(props) {
       .then((data) => {
         setUsernames(Object.keys(data));
       });
-  }, [props.title]);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [usernames, setUsernames] = useState(null);
-  const [name, setName] = useState("");
-
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
-  const nameInputRef = useRef();
+    fetch(
+      "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/users.json"
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        let emails = [];
+        for (const user in data) {
+          emails.push(data[user].email);
+        }
+        setEmails(emails);
+        if (typeof emails != "undefined" && emails.includes(email)) {
+          setError((prevState) => ({
+            ...prevState,
+            email: "The user with this email has already registered",
+          }));
+        }
+      });
+  }, [props.title, email]);
 
   let history = useHistory();
 
   const nameChangeHandler = (e) => {
-    setName(e.target.value);
+    const nameInput = e.target.value;
+    setName(nameInput);
+    if (usernames.includes(nameInput)) {
+      setError((prevState) => ({
+        ...prevState,
+        name: `${nameInput} already exists`,
+      }));
+    } else {
+      setError((prevState) => ({ ...prevState, name: null }));
+    }
+  };
+
+  const emailChangeHandler = (e) => {
+    const emailInput = e.target.value;
+    setEmail(emailInput);
+    if (!emailInput.includes("@")) {
+      setError((prevState) => ({
+        ...prevState,
+        email: `${emailInput} is not valid`,
+      }));
+    } else if (typeof emails != "undefined" && emails.includes(emailInput)) {
+      setError((prevState) => ({
+        ...prevState,
+        email: "The user with this email has already registered",
+      }));
+    } else {
+      setError((prevState) => ({ ...prevState, email: null }));
+    }
+  };
+
+  const passwordChangeHandler = (e) => {
+    const passwordInput = e.target.value;
+    setPassword(passwordInput);
+    if (passwordInput.length >= 1 && passwordInput.length <= 5) {
+      setError((prevState) => ({
+        ...prevState,
+        password: "This password is too weak",
+      }));
+    } else {
+      setError((prevState) => ({ ...prevState, password: null }));
+    }
   };
 
   const registerUser = useCallback(
     async function (url) {
-      const enteredEmail = emailInputRef.current.value;
-      const enteredPassword = passwordInputRef.current.value;
-      const enteredName = nameInputRef.current.value;
-
       const response = await fetch(url, {
         method: "POST",
         body: JSON.stringify({
-          email: enteredEmail,
-          password: enteredPassword,
+          email: email,
+          password: password,
           returnSecureToken: true,
         }),
         headers: {
@@ -65,7 +115,7 @@ function Register(props) {
         "https://smart-brain-8a35a-default-rtdb.asia-southeast1.firebasedatabase.app/usernames.json",
         {
           method: "PATCH",
-          body: JSON.stringify({ [enteredName]: `${data.localId}` }),
+          body: JSON.stringify({ [name]: `${data.localId}` }),
           headers: { "Content-Type": "application/json" },
         }
       );
@@ -76,9 +126,9 @@ function Register(props) {
           method: "PATCH",
           body: JSON.stringify({
             [data.localId]: {
-              email: enteredEmail,
+              email: email,
               points: 0,
-              username: enteredName,
+              username: name,
             },
           }),
           headers: { "Content-Type": "application/json" },
@@ -96,14 +146,14 @@ function Register(props) {
       );
 
       authContext.getCredentials({
-        username: enteredName,
+        username: name,
         points: 0,
-        email: enteredEmail,
+        email: email,
       });
 
       history.replace("/home");
     },
-    [authContext, history]
+    [authContext, history, name, email, password]
   );
 
   const submitHandler = useCallback(
@@ -111,6 +161,27 @@ function Register(props) {
       e.preventDefault();
 
       // add validation
+      if (name === "") {
+        setError((prevState) => ({
+          ...prevState,
+          name: "This field cannot be empty",
+        }));
+        return;
+      }
+      if (email === "") {
+        setError((prevState) => ({
+          ...prevState,
+          email: "This field cannot be empty",
+        }));
+        return;
+      }
+      if (password === "") {
+        setError((prevState) => ({
+          ...prevState,
+          password: "This field cannot be empty",
+        }));
+        return;
+      }
 
       setIsLoading(true);
 
@@ -118,7 +189,7 @@ function Register(props) {
         "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCJgVBuxrNjLa2VeYMY2I-_95ochdVZXzs"
       );
     },
-    [registerUser]
+    [registerUser, email, name, password]
   );
 
   return (
@@ -136,17 +207,18 @@ function Register(props) {
                 type="text"
                 name="name"
                 id="name"
-                ref={nameInputRef}
                 onChange={nameChangeHandler}
               />
-              {usernames && usernames.includes(name) && (
+              {usernames && error.name && (
                 <small
                   id="name-desc"
                   className="f6 black-60 db mb2 mt2"
                   style={{ color: "red" }}
-                >{`${name} already exists`}</small>
+                >
+                  {error.name}
+                </small>
               )}
-              {usernames && !usernames.includes(name) && name.length >= 3 && (
+              {usernames && !error.name && name.length >= 3 && (
                 <small
                   id="name-desc"
                   className="f6 black-60 db mb2 mt2"
@@ -163,8 +235,24 @@ function Register(props) {
                 type="email"
                 name="email-address"
                 id="email-address"
-                ref={emailInputRef}
+                onChange={emailChangeHandler}
               />
+              {error.email && email.length >= 6 && (
+                <small
+                  id="email-desc"
+                  className="f6 black-60 db mb2 mt2"
+                  style={{ color: "red" }}
+                >
+                  {error.email}
+                </small>
+              )}
+              {!error.email && email.length >= 6 && (
+                <small
+                  id="email-desc"
+                  className="f6 black-60 db mb2 mt2"
+                  style={{ color: "green" }}
+                >{`${email} is available`}</small>
+              )}
             </div>
             <div className="mv3">
               <label className="db fw6 lh-copy f6 tc" htmlFor="password">
@@ -175,8 +263,26 @@ function Register(props) {
                 type="password"
                 name="password"
                 id="password"
-                ref={passwordInputRef}
+                onChange={passwordChangeHandler}
               />
+              {error.password && (
+                <small
+                  id="email-desc"
+                  className="f6 black-60 db mb2 mt2"
+                  style={{ color: "red" }}
+                >
+                  {error.password}
+                </small>
+              )}
+              {!error.password && !!password.length && (
+                <small
+                  id="email-desc"
+                  className="f6 black-60 db mb2 mt2"
+                  style={{ color: "green" }}
+                >
+                  {"This password is strong"}
+                </small>
+              )}
             </div>
           </fieldset>
           <div className="tc">
@@ -184,6 +290,13 @@ function Register(props) {
               <Button
                 className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
                 type="submit"
+                disabled={
+                  typeof error.name === "string" ||
+                  typeof error.email === "string" ||
+                  typeof error.password === "string"
+                    ? true
+                    : false
+                }
               >
                 Register
               </Button>
