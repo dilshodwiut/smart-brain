@@ -10,7 +10,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Clarifai from "clarifai";
 
 export const app = new Clarifai.App({
-  apiKey: "da83cb85013349cd9208ff3964b606f5",
+  apiKey: process.env.REACT_APP_CLARIFAI_API_KEY,
 });
 
 ReactDOM.render(
