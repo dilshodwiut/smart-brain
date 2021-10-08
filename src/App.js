@@ -1,4 +1,4 @@
-import React, { useContext, Suspense } from "react";
+import React, { useContext, useState, useEffect, Suspense } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { AuthContext } from "./context/auth-context";
 import Layout from "./hoc/Layout/Layout";
@@ -9,6 +9,7 @@ import Welcome from "./routes/Welcome/Welcome";
 import styles from "./App.module.css";
 import { spring, AnimatedSwitch } from "react-router-transition";
 import FourOFour from "./routes/404/FourOFour";
+import Snackbar from "./components/UI/Snackbar/Snackbar";
 import Preloader from "./components/UI/Preloader/Preloader";
 
 // we need to map the `scale` prop we define below
@@ -52,6 +53,21 @@ function App() {
 
   const authContext = useContext(AuthContext);
 
+  const animationStyles = {
+    marginRight: "-100%",
+    animation: "slideout 1.2s 1",
+  };
+
+  const [snackbarIsShown, setSnackbarIsShown] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setSnackbarIsShown(false);
+    }, 5000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   const Rankings = React.lazy(() => import("./routes/Rankings/Rankings"));
   const Register = React.lazy(() => import("./routes/Register/Register"));
   const Signin = React.lazy(() => import("./routes/Signin/Signin"));
@@ -61,6 +77,9 @@ function App() {
     <Layout>
       <Navigation />
       <Logo />
+      <Snackbar style={!snackbarIsShown ? animationStyles : null}>
+        The app is still in development! Please excuse that!
+      </Snackbar>
       <Suspense fallback={<Preloader />}>
         <AnimatedSwitch
           atEnter={bounceTransition.atEnter}
